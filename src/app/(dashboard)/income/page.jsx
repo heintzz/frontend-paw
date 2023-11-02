@@ -3,6 +3,7 @@
 import React, { useState , useEffect } from "react";
 import { incomeServices } from "@/services/income.services";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const IncomePage = () => {
   function formatDate(inputDate) {
@@ -244,9 +245,21 @@ const IncomePage = () => {
                 </td>
                 <td>
                   <div className="grid grid-flow-col-dense justify-items-center">
-                    <button className="hover:bg-[#c0c0c0] active:bg-[#474747]">
-                      <img className="w-6 h-6" src="/assets/edit.png" alt="Edit" />
-                    </button>
+                    <Link
+                      href={{
+                        pathname: "/income/edit",
+                        query: {
+                          id: item._id,
+                          name: item.incomeName,
+                          monthly: item.incomeMonthly,
+                          amount: item.incomeAmount,
+                        }
+                      }}
+                    >
+                      <button className="hover:bg-[#c0c0c0] active:bg-[#474747]">
+                        <img className="w-6 h-6" src="/assets/edit.png" alt="Edit" />
+                      </button>
+                    </Link>
                     <button className="hover:bg-[#c0c0c0] active:bg-[#474747]">
                       <img className="w-6 h-6" src="/assets/trash.png" alt="Delete" />
                     </button>

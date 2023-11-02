@@ -39,4 +39,22 @@ const createIncomeData = async (body) => {
   });
 };
 
-export const incomeServices = { getIncomeData, createIncomeData };
+const editIncomeData = async (body, id) => {
+  let token = tokenServices.getAccessToken();
+  return new Promise((resolve, reject) => {
+    axios
+      .patch(`${BASE_URL}/income/${id}`, body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((err) => {
+        reject(err.response.data);
+      });
+  });
+};
+
+export const incomeServices = { getIncomeData, createIncomeData, editIncomeData};
