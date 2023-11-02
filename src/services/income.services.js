@@ -57,4 +57,22 @@ const editIncomeData = async (body, id) => {
   });
 };
 
-export const incomeServices = { getIncomeData, createIncomeData, editIncomeData};
+const deleteIncomeData = async (id) => {
+  let token = tokenServices.getAccessToken();
+  return new Promise((resolve, reject) => {
+    axios
+      .delete(`${BASE_URL}/income/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((err) => {
+        reject(err.response.data);
+      });
+  });
+};
+
+export const incomeServices = { getIncomeData, createIncomeData, editIncomeData, deleteIncomeData};

@@ -2,6 +2,7 @@
 
 import React, { useState , useEffect } from "react";
 import { incomeServices } from "@/services/income.services";
+import DeleteConfirmation from "@/components/DeleteConfirmation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -101,6 +102,30 @@ const IncomePage = () => {
   };
 
   const sortedIncomeData = sortIncomeData();
+
+  const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
+
+  const showDeleteConfirmation = () => {
+    setDeleteConfirmationVisible(true);
+  };
+
+  const hideDeleteConfirmation = () => {
+    setDeleteConfirmationVisible(false);
+  };
+
+  const handleDelete = (id) => {
+    (async () => {
+      try {
+        const res = await incomeServices.deleteIncomeData(id);
+        if (res.success) {
+          window.location.reload();
+          hideDeleteConfirmation();
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  };
 
   return (
     <div className="pt-8 relative">
@@ -259,9 +284,15 @@ const IncomePage = () => {
                         <img className="w-6 h-6" src="/assets/edit.png" alt="Edit" />
                       </button>
                     </Link>
-                    <button className="hover:bg-[#c0c0c0] active:bg-[#474747]">
+                    <button className="hover:bg-[#c0c0c0] active-bg-[#474747]" onClick={showDeleteConfirmation}>
                       <img className="w-6 h-6" src="/assets/trash.png" alt="Delete" />
                     </button>
+
+                    <DeleteConfirmation
+                      isOpen={isDeleteConfirmationVisible}
+                      hideDeleteConfirmation={hideDeleteConfirmation}
+                      handleDelete={() => handleDelete(item._id)}
+                    />
                   </div>
                 </td>
               </tr>
