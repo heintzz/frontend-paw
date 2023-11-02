@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState , useEffect } from "react";
-import { incomeServices } from "@/services/income.services"
+import { incomeServices } from "@/services/income.services";
+import { useRouter } from "next/navigation";
 
 const IncomePage = () => {
   function formatDate(inputDate) {
@@ -17,6 +18,8 @@ const IncomePage = () => {
   
     return `${day} ${month} ${year}`;
   }
+
+  const router = useRouter();
 
   const [incomeData, setIncomeData] = useState([]);
 
@@ -111,6 +114,7 @@ const IncomePage = () => {
           </button>
           <button
             className="rounded-full text-white text-[32px] font-thin px-4 text-center bg-[#4C9C66] hover:bg-[#3A7F50] active:bg-[#2A613C]"
+            onClick={() => router.push("/income/create")}
           >
             +
           </button>
