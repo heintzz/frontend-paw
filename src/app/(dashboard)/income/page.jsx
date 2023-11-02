@@ -26,7 +26,7 @@ const IncomePage = () => {
 
   useEffect(() => {
     // Fetch income data and update the state
-    incomeServices.getIncomeData() // Replace with the user's token
+    incomeServices.getIncomeData() 
       .then((data) => {
         setIncomeData(data.data);
       })
@@ -54,7 +54,7 @@ const IncomePage = () => {
   };
 
   const filterIncomeData = (item) => {
-    if (!applyFilter) return true; // Apply filter only when applyFilter is true
+    if (!applyFilter) return true; 
   
     if (selectedCategory && (item.incomeMonthly ? 'Bulanan' : 'Non Bulanan') !== selectedCategory) {
       return false;
@@ -181,7 +181,7 @@ const IncomePage = () => {
               <button
                 className="w-150 ml-[100px] mt-8 rounded-full text-white px-4 py-2 bg-[#4C9C66] hover-bg-[#3A7F50] active-bg-[#2A613C]"
                 onClick={() => {
-                  setApplyFilter(true); // Set applyFilter to true to apply the filter
+                  setApplyFilter(true); 
                   setShowFilter(false);
                 }}
               >
@@ -190,11 +190,10 @@ const IncomePage = () => {
               <button
                 className="w-150 ml-[100px] mt-2 rounded-full text-white px-4 py-2 bg-[#4C9C66] hover-bg-[#3A7F50] active-bg-[#2A613C]"
                 onClick={() => {
-                  // Reset filter logic, set all filter state variables to their initial state
                   setSelectedCategory("");
                   setMinAmount("");
                   setMaxAmount("");
-                  setApplyFilter(false); // Set applyFilter to false to reset the filter
+                  setApplyFilter(false); 
                   setShowFilter(false);
                 }}
               >

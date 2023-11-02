@@ -12,7 +12,6 @@ const CreatePage = () => {
 
   const onSubmit = (data) => {
     (async () => {
-    // Prepare the data object
     const postData = {
       incomeName: data.activity,
       incomeAmount: data.amount,

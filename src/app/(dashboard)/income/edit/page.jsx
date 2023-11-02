@@ -11,7 +11,7 @@ const EditPage = () => {
   const id = searchParams.get('id')
   const incomeName = searchParams.get('name')
   const incomeAmount = searchParams.get('amount')
-  const incomeMonthly = searchParams.get('monthly') === 'true'; // Convert to boolean
+  const incomeMonthly = searchParams.get('monthly') === 'true';
   
   const { control, handleSubmit, reset } = useForm();
   const [isMonthly, setIsMonthly] = useState(incomeMonthly);
@@ -19,7 +19,6 @@ const EditPage = () => {
 
   const onSubmit = (data) => {
     (async () => {
-    // Prepare the data object
     const patchData = {
       incomeName: data.activity,
       incomeAmount: data.amount,
