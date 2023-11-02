@@ -66,25 +66,6 @@ const CreatePage = () => {
             </div>
             <div className="mb-4">
               <label className="font-sans font-semibold text-[20px] text-black">
-                Category
-              </label>
-              <Controller
-                name="category"
-                control={control}
-                defaultValue="Bulanan"
-                render={({ field }) => (
-                  <select
-                    {...field}
-                    className="w-full py-2 px-4 rounded-md bg-white outline outline-2 mt-2"
-                  >
-                    <option value="Bulanan">Bulanan</option>
-                    <option value="Non Bulanan">Non Bulanan</option>
-                  </select>
-                )}
-              />
-            </div>
-            <div className="mb-4">
-              <label className="font-sans font-semibold text-[20px] text-black">
                 Amount
               </label>
               <Controller
