@@ -3,9 +3,9 @@ import SidebarLayout from "@/components/SidebarLayout";
 
 export default function DashboardLayout({ children }) {
   return (
-    <>
+    <div className="bg-[#F2F1F1] min-h-screen">
       <SidebarLayout />
       <MainLayout>{children}</MainLayout>
-    </>
+    </div>
   );
 }
