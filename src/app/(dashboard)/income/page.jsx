@@ -161,7 +161,7 @@ const IncomePage = () => {
                       onChange={handleCategoryChange}
                       className="pl-4 pr-[80px] py-1 rounded-md bg-white outline outline-2"
                     >
-                    <option disabled selected>Select a category</option>
+                    <option value="" disabled selected>Select a category</option>
                     {categories.map((category) => (
                       <option key={category} value={category}>
                         {category}

@@ -57,7 +57,7 @@ const ExpensePage = () => {
   const filterExpenseData = (item) => {
     if (!applyFilter) return true; 
   
-    if (selectedCategory && (item.expenseCategory == selectedCategory)) {
+    if (selectedCategory && (item.expenseCategory != selectedCategory)) {
       return false;
     }
     if (minAmount && item.expenseAmount < minAmount) {
@@ -166,7 +166,7 @@ const ExpensePage = () => {
                       onChange={handleCategoryChange}
                       className="pl-4 pr-[80px] py-1 rounded-md bg-white outline outline-2"
                     >
-                    <option disabled selected>Select a category</option>
+                    <option value="" disabled selected>Select a category</option>
                     {categories.map((category) => (
                       <option key={category} value={category}>
                         {category}
@@ -264,7 +264,7 @@ const ExpensePage = () => {
                 <td>{formatDate(item.createdAt)}</td>
                 <td>{item.expenseName}</td>
                 <td>
-                  {item.expenseMonthly ? 'Bulanan':'Non Bulanan'}
+                  {item.expenseCategory}
                 </td>
                 <td>{item.expenseAmount}</td>
                 <td>
