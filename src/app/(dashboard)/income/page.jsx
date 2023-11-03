@@ -268,26 +268,30 @@ const IncomePage = () => {
                   </div>
                 </td>
                 <td>
-                  <div className="grid grid-flow-col-dense justify-items-center">
-                    <Link
-                      href={{
-                        pathname: "/income/edit",
-                        query: {
-                          id: item._id,
-                          name: item.incomeName,
-                          monthly: item.incomeMonthly,
-                          amount: item.incomeAmount,
-                        }
-                      }}
-                    >
-                      <button className="hover:bg-[#c0c0c0] active:bg-[#474747]">
-                        <img className="w-6 h-6" src="/assets/edit.png" alt="Edit" />
+                  <div className="flex flex-row justify-between items-center">
+                    <div>
+                      <Link
+                        href={{
+                          pathname: "/income/edit",
+                          query: {
+                            id: item._id,
+                            name: item.incomeName,
+                            monthly: item.incomeMonthly,
+                            amount: item.incomeAmount,
+                          }
+                        }}
+                      >
+                        <button className="hover:bg-[#c0c0c0] active:bg-[#474747]">
+                          <img className="w-6 h-6" src="/assets/edit.png" alt="Edit" />
+                        </button>
+                      </Link>
+                    </div>
+                    <div>
+                      <button className="hover:bg-[#c0c0c0] active-bg-[#474747]" onClick={showDeleteConfirmation}>
+                        <img className="w-6 h-6" src="/assets/trash.png" alt="Delete" />
                       </button>
-                    </Link>
-                    <button className="hover:bg-[#c0c0c0] active-bg-[#474747]" onClick={showDeleteConfirmation}>
-                      <img className="w-6 h-6" src="/assets/trash.png" alt="Delete" />
-                    </button>
-
+                    </div>
+                    
                     <DeleteConfirmation
                       isOpen={isDeleteConfirmationVisible}
                       hideDeleteConfirmation={hideDeleteConfirmation}
