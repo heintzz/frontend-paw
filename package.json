@@ -10,16 +10,20 @@
   },
   "dependencies": {
     "axios": "^1.6.0",
+    "chart.js": "^4.4.0",
     "daisyui": "^3.9.4",
     "js-cookie": "^3.0.5",
     "next": "^14.0.0",
     "react": "^18",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "react-hook-form": "^7.47.0",
     "react-icons": "^4.11.0",
     "zustand": "^4.4.4"
   },
   "devDependencies": {
+    "@types/node": "20.8.10",
+    "@types/react": "18.2.34",
     "autoprefixer": "^10",
     "eslint": "^8",
     "eslint-config-next": "14.0.0",

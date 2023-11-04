@@ -9,8 +9,11 @@ module.exports = {
     extend: {
       colors: {
         main: "#4C9C66",
+        "main-hover": "#3A7F50",
+        "main-active": "#2A613C",
         "base-black": "#080325",
         "base-white": "#F8F9FA",
+        "odd-table": "#F7F6FE",
       },
     },
   },
