@@ -1,3 +1,5 @@
+import { listOfMonths } from "@/enums/date.enum";
+
 export const convertNumberToCurrencyFormat = (number) => {
   const stringNumber = String(number);
   const arrayOfStringNumber = stringNumber.split("");
@@ -22,4 +24,13 @@ export const convertNumberToCurrencyFormat = (number) => {
   const currencyFormat = formattedArray.join("");
 
   return currencyFormat;
+};
+
+export const formatDate = (inputDate) => {
+  const date = new Date(inputDate);
+  const day = date.getDate();
+  const month = listOfMonths[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${day} ${month} ${year}`;
 };

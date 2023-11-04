@@ -1,4 +1,4 @@
-const indexToMonth = {
+export const indexToMonth = {
   1: "Jan",
   2: "Feb",
   3: "Mar",
@@ -13,7 +13,7 @@ const indexToMonth = {
   12: "Dec",
 };
 
-const monthToIndex = {
+export const monthToIndex = {
   Jan: 1,
   Feb: 2,
   Mar: 3,
@@ -28,7 +28,7 @@ const monthToIndex = {
   Dec: 12,
 };
 
-const abbreviateToFullName = {
+export const abbreviateMonthToFullName = {
   Jan: "January",
   Feb: "February",
   Mar: "March",
@@ -43,4 +43,17 @@ const abbreviateToFullName = {
   Dec: "December",
 };
 
-export { indexToMonth, monthToIndex, abbreviateToFullName };
+export const listOfMonths = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
