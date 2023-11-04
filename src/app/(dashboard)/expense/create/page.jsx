@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import {expenseServices} from "@/services/expense.services"
+import { expenseServices } from "@/services/expense.services";
 import { useRouter } from "next/navigation";
 
 const CreatePage = () => {
@@ -22,12 +22,12 @@ const CreatePage = () => {
 
   const onSubmit = (data) => {
     (async () => {
-    const postData = {
-      expenseName: data.activity,
-      expenseAmount: data.amount,
-      expenseCategory: data.category,
-      expenseMonthly: isMonthly,
-    };
+      const postData = {
+        expenseName: data.activity,
+        expenseAmount: data.amount,
+        expenseCategory: data.category,
+        expenseMonthly: isMonthly,
+      };
 
       try {
         const res = await expenseServices.createExpenseData(postData);
@@ -48,18 +48,16 @@ const CreatePage = () => {
   return (
     <div className="pt-8 relative">
       <div className="bg-white py-4 flex items-center">
-        <button className="hover:bg-[#c0c0c0] active:bg-[#474747] ml-8" onClick={()=>router.push("/expense")}>
+        <button className="ml-8" onClick={() => router.push("/expense")}>
           <img className="w-6 h-10" src="/assets/back button.png" />
         </button>
-        <h1 className="font-sans font-bold text-[32px] text-black ml-8">Create Expense</h1>
+        <h1 className="font-bold text-[32px] text-black ml-8">Create Expense</h1>
       </div>
       <div className="flex items-center justify-center mt-8">
         <div className="p-4 rounded-xl">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
-              <label className="font-sans font-semibold text-[20px] text-black">
-                Activity
-              </label>
+              <label className="font-semibold text-[20px] text-black">Activity</label>
               <Controller
                 name="activity"
                 control={control}
@@ -75,9 +73,7 @@ const CreatePage = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="font-sans font-semibold text-[20px] text-black">
-                Category
-              </label>
+              <label className="font-semibold text-[20px] text-black">Category</label>
               <Controller
                 name="category"
                 control={control}
@@ -97,9 +93,7 @@ const CreatePage = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="font-sans font-semibold text-[20px] text-black">
-                Amount
-              </label>
+              <label className="font-semibold text-[20px] text-black">Amount</label>
               <Controller
                 name="amount"
                 control={control}
@@ -115,9 +109,7 @@ const CreatePage = () => {
               />
             </div>
             <div className="mb-4 flex items-center">
-              <label className="font-sans font-semibold text-[20px] text-black mr-4">
-                Monthly
-              </label>
+              <label className="font-semibold text-[20px] text-black mr-4">Monthly</label>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input
                   type="checkbox"
@@ -125,16 +117,20 @@ const CreatePage = () => {
                   value={isMonthly}
                   onChange={handleMonthlyToggle}
                 />
-                <div className={`w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 rounded-full peer ${isMonthly ? 'peer-checked:after:translate-x-full peer-checked:after:border-white' : ''} after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-black`}></div>
+                <div
+                  className={`w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 rounded-full peer ${
+                    isMonthly
+                      ? "peer-checked:after:translate-x-full peer-checked:after:border-white"
+                      : ""
+                  } after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-black`}
+                ></div>
               </label>
             </div>
-            <div className="text-black text-sm mb-6">
-                *set as a monthly expense
-            </div>
+            <div className="text-black text-sm mb-6">*set as a monthly expense</div>
             <div className="text-center">
               <button
                 type="submit"
-                className="rounded-full text-white px-4 py-2 bg-[#4C9C66] hover:bg-[#3A7F50] active:bg-[#2A613C]"
+                className="rounded-full text-white px-4 py-2 bg-main hover:bg-main-hover active:bg-main-active"
               >
                 Create
               </button>

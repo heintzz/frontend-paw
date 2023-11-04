@@ -1,13 +1,14 @@
 "use client";
 
-import AlertResponse from "@/components/AlertResponse";
-import { authServices } from "@/services/auth.services";
-import { tokenServices } from "@/services/token.service";
-import { useAlertStore } from "@/stores/alert.store";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+
+import AlertResponse from "@/components/AlertResponse";
+import { authServices } from "@/services/auth.services";
+import { tokenServices } from "@/services/token.service";
+import { useAlertStore } from "@/stores/alert.store";
 
 const SignupPage = () => {
   const router = useRouter();
@@ -125,7 +126,7 @@ const SignupPage = () => {
         <span className="text-center mt-6 text-sm">
           Already have an account? Please&nbsp;
           <Link href="/login" className="font-bold cursor-pointer">
-            login
+            Login
           </Link>
         </span>
       </div>

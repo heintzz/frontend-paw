@@ -9,7 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { abbreviateToFullName } from "@/enums/enum";
+import { abbreviateMonthToFullName } from "@/enums/date.enum";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -32,7 +32,7 @@ export const options = {
       callbacks: {
         title: function (context) {
           const abbreviate = context[0].label;
-          return abbreviateToFullName[abbreviate];
+          return abbreviateMonthToFullName[abbreviate];
         },
       },
     },
@@ -55,7 +55,9 @@ export const options = {
           size: 12,
         },
         callback: function (value) {
-          return value / 1000 + "k";
+          const thousandMultiplier = 1000;
+          if (value >= thousandMultiplier ** 2) return value / thousandMultiplier ** 2 + "M";
+          else if (value >= thousandMultiplier) return value / thousandMultiplier + "K";
         },
       },
     },
