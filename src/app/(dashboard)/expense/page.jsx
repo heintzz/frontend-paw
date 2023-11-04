@@ -22,7 +22,10 @@ const ExpensePage = () => {
   const [applyFilter, setApplyFilter] = useState(false);
   const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
 
-  const [sortOrder, sortColumn, toggleSortOrder, sortData] = useSorting(expenseData);
+  const [sortOrder, sortColumn, toggleSortOrder, sortData] = useSorting(
+    expenseData,
+    "expenseAmount"
+  );
   const sortedExpenseData = sortData();
 
   useEffect(() => {
@@ -79,6 +82,7 @@ const ExpensePage = () => {
         if (res.success) {
           window.location.reload();
           hideDeleteConfirmation();
+          u;
         }
       } catch (error) {
         console.error(error);
@@ -95,7 +99,7 @@ const ExpensePage = () => {
   };
 
   return (
-    <div className="pt-4 pb-8">
+    <div className="pt-4 pb-24">
       <div className="bg-white min-w-screen py-4 flex items-center justify-between">
         <h1 className="font-bold text-[32px] text-black ml-8">Expense</h1>
         <div className="flex space-x-4 mr-4">
@@ -192,7 +196,7 @@ const ExpensePage = () => {
         </div>
       )}
 
-      <div className="bg-white mt-6 rounded-md mx-8">
+      <div className="bg-white mt-6 rounded-md mx-8 overflow-x-auto">
         <table className="table">
           <thead className="text-black">
             <tr className="text-sm">
@@ -210,7 +214,7 @@ const ExpensePage = () => {
                   {sortColumn === "amount" && sortOrder === "asc" ? "▲" : "▼"}
                 </button>
               </th>
-              <th>Status</th>
+              <th>Status Penambahan</th>
               <th className="text-center">Action</th>
             </tr>
           </thead>
@@ -227,7 +231,7 @@ const ExpensePage = () => {
                       item.autoAdd ? "bg-info" : "bg-main"
                     } text-white w-fit px-4 py-1 font-semibold`}
                   >
-                    {item.autoAdd ? "Ditambahkan Otomatis" : "Ditambahkan Manual"}
+                    {item.autoAdd ? "Otomatis" : "Manual"}
                   </div>
                 </td>
                 <td>
