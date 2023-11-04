@@ -1,122 +1,112 @@
 "use client";
+
+import { tokenServices } from "@/services/token.service";
+import { useSidebarStore } from "@/stores/sidebar.store";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import DashboardIcon from "public/assets/dashboardIcon.png";
+import ExpenseIcon from "public/assets/expenseIcon.png";
+import FnewsIcon from "public/assets/fNewsIcon.png";
+import FintrackLogo from "public/assets/fintrackLogo.png";
+import GoalIcon from "public/assets/goalsIcon.png";
+import IncomeIcon from "public/assets/incomeIcon.png";
+import { GiHamburgerMenu } from "react-icons/gi";
+
+import { useShallow } from "zustand/react/shallow";
 import "../styles/SidebarLayout.css";
-import { useState } from "react";
+
+const sidebarItems = [
+  {
+    name: "Dashboard",
+    icon: DashboardIcon,
+    path: "/",
+  },
+  {
+    name: "Income",
+    icon: IncomeIcon,
+    path: "/income",
+  },
+  {
+    name: "Expense",
+    icon: ExpenseIcon,
+    path: "/expense",
+  },
+  {
+    name: "Goal",
+    icon: GoalIcon,
+    path: "/goal",
+  },
+  {
+    name: "F-News",
+    icon: FnewsIcon,
+    path: "/news",
+  },
+];
 
 export default function SidebarLayout() {
-  const [selectedItem, setSelectedItem] = useState(null);
+  const { showSidebar, setShowSidebar } = useSidebarStore(
+    useShallow((state) => ({
+      showSidebar: state.showSidebar,
+      setShowSidebar: state.setShowSidebar,
+    }))
+  );
 
-  const handleItemClick = (item) => {
-    setSelectedItem(item);
-  };
+  const pathname = usePathname();
 
-  const isItemSelected = (item) => {
-    return item === selectedItem ? "selected" : "";
+  const checkActiveMenu = (name, path) => {
+    if (name === "Dashboard") {
+      return pathname === path;
+    } else {
+      return pathname.startsWith(path);
+    }
   };
 
   return (
-    <div className="sidebar">
-      <div className="header">
-        <div className="logo-container">
-          <Image
-            src="/assets/fintrackLogo.png"
-            alt="Fintrack Logo"
-            width={25.32}
-            height={29.82}
-          />
-          <div className="app-name">Fintrack</div>
+    <div className={`sidebar ${showSidebar ? "" : "close"}`}>
+      <div className={`header ${showSidebar ? "" : "close"}`}>
+        {showSidebar && (
+          <>
+            <Image src={FintrackLogo} alt="Fintrack Logo" width={25.32} height={29.82} />
+            <div className="app-name">Fintrack</div>
+          </>
+        )}
+        <div className="hamburger-menu" onClick={() => setShowSidebar(showSidebar)}>
+          <GiHamburgerMenu fill="white" size="1.5em" />
         </div>
       </div>
       <div className="main-navigation">
-        <div
-          className={`item ${isItemSelected("Dashboard")}`}
-          onClick={() => handleItemClick("Dashboard")}
-        >
-          <div className="icon-text">
-            <Image
-              className="icon-chat"
-              src="/assets/dashboardIcon.png"
-              alt="Menu Icon"
-              width={30}
-              height={30}
-            />
-            <div className="chat">Dashboard</div>
-          </div>
-        </div>
-        <div
-          className={`item ${isItemSelected("Income")}`}
-          onClick={() => handleItemClick("Income")}
-        >
-          <div className="icon-text">
-            <Image
-              className="icon-chat"
-              src="/assets/incomeIcon.png"
-              alt="Menu Icon"
-              width={30}
-              height={30}
-            />
-            <div className="chat">Income</div>
-          </div>
-        </div>
-        <div
-          className={`item ${isItemSelected("Expense")}`}
-          onClick={() => handleItemClick("Expense")}
-        >
-          <div className="icon-text">
-            <Image
-              className="icon-chat"
-              src="/assets/expenseIcon.png"
-              alt="Menu Icon"
-              width={30}
-              height={30}
-            />
-            <div className="chat">Expense</div>
-          </div>
-        </div>
-        <div
-          className={`item ${isItemSelected("Goals")}`}
-          onClick={() => handleItemClick("Goals")}
-        >
-          <div className="icon-text">
-            <Image
-              className="icon-chat"
-              src="/assets/goalsIcon.png"
-              alt="Menu Icon"
-              width={30}
-              height={30}
-            />
-            <div className="chat">Goals</div>
-          </div>
-        </div>
-        <div
-          className={`item ${isItemSelected("Fnews")}`}
-          onClick={() => handleItemClick("Fnews")}
-        >
-          <div className="icon-text">
-            <Image
-              className="icon-chat"
-              src="/assets/fNewsIcon.png"
-              alt="Menu Icon"
-              width={30}
-              height={30}
-            />
-            <div className="chat">F-News</div>
-          </div>
-        </div>
+        {sidebarItems.map((item, index) => {
+          const { name, icon, path } = item;
+          let isActiveMenu = checkActiveMenu(name, path);
+          return (
+            <Link key={index} href={path}>
+              <div className={`item ${isActiveMenu && "selected"}`}>
+                <Image
+                  className="icon-chat"
+                  src={icon}
+                  alt={`${name} Icon`}
+                  width={30}
+                  height={30}
+                />
+                {showSidebar && name}
+              </div>
+            </Link>
+          );
+        })}
       </div>
       <div className="footer">
-        <div className="item">
-          <div className="icon-text">
-            <Image
-              className="icon-chat"
-              src="/assets/logoutIcon.png"
-              alt="Menu Icon"
-              width={22}
-              height={22}
-            />
-            <div className="chat">Logout</div>
-          </div>
-        </div>
+        <Link href="/login" onClick={tokenServices.removeAccessToken} className="item">
+          <Image
+            className="icon-chat"
+            src="/assets/logoutIcon.png"
+            alt="Menu Icon"
+            width={22}
+            height={22}
+          />
+          {showSidebar && "Logout"}
+        </Link>
       </div>
     </div>
   );

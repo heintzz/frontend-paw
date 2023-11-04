@@ -1,4 +1,5 @@
 .sidebar {
+  color: white;
   width: 300px;
   height: 100vh;
   padding-bottom: 32.41px;
@@ -13,44 +14,45 @@
   transition: ease-in-out 0.3s;
   overflow: hidden;
   position: fixed;
+  z-index: 2;
+  padding-top: 20px;
+}
+
+.sidebar.close {
+  width: 100px;
 }
 
 .header {
-  width: 267.39px;
-  flex: 1 1 1;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
   display: flex;
+  width: 100%;
   border-bottom: 2px solid #344055;
+  padding-bottom: 25px;
+  align-items: center;
+  justify-content: center;
+  column-gap: 12px;
 }
 
-.logo-container {
-  padding: 12.5px 50px;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 8.1px;
-  display: flex;
+.header.close {
+  border-bottom: none;
+  padding-bottom: 0px;
 }
 
 .app-name {
-  color: white;
   font-size: 32.41px;
   font-family: Poppins;
-  font-weight: 700;
+  font-weight: 600;
   word-wrap: break-word;
 }
 
 .main-navigation {
-  height: 291.7px;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 291.7px;
 }
 
 .item {
-  width: 267.39px;
+  width: 100%;
   height: 72.93px;
   padding: 20.26px;
   background: #080325;
@@ -58,38 +60,24 @@
   justify-content: flex-start;
   align-items: center;
   gap: 17.22px;
-  display: inline-flex;
+  display: flex;
   cursor: pointer;
 }
 
 .item.selected {
+  width: 100%;
   background: #4c9c66;
-}
-
-.icon-text {
-  flex: 1 1 0;
-  height: 32.41px;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 14.18px;
-  display: flex;
-}
-
-.icon-chat {
-  position: relative;
 }
 
 .chat {
   color: #cbcfd5;
   font-size: 14.18px;
-  font-family: Inter;
   font-weight: 600;
   line-height: 20.26px;
   word-wrap: break-word;
 }
 
 .footer {
-  width: 267.39px;
   height: 73.94px;
   background: #080325;
   flex-direction: column;
@@ -98,4 +86,13 @@
   display: inline-flex;
   border-top: 2px solid #344055;
   margin-top: auto;
+}
+
+.hamburger-menu {
+  display: grid;
+  place-items: center;
+  background: #4c9c66;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
 }
