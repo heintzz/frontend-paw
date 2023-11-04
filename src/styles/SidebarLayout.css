@@ -10,8 +10,6 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 48.62px;
-  display: inline-flex;
-  transition: ease-in-out 0.3s;
   overflow: hidden;
   position: fixed;
   z-index: 2;
@@ -81,9 +79,7 @@
   height: 73.94px;
   background: #080325;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  display: inline-flex;
+  display: flex;
   border-top: 2px solid #344055;
   margin-top: auto;
 }

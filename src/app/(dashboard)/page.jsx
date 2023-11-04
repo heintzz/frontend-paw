@@ -4,17 +4,19 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { FaHandHoldingUsd, FaWallet } from "react-icons/fa";
 import { IoTrendingDown } from "react-icons/io5";
-import { MdSavings } from "react-icons/md";
+import { MdLogout, MdSavings } from "react-icons/md";
 
 import { BarChart } from "@/components/dashboard/BarChart";
 import { DoughnutChart } from "@/components/dashboard/DoughnutChart";
 import { LineChart } from "@/components/dashboard/LineChart";
-import { indexToMonth } from "@/enums/date.enum";
 import { biColors, expenseColors } from "@/enums/category.enum";
+import { indexToMonth } from "@/enums/date.enum";
 
 import { convertNumberToCurrencyFormat } from "@/helpers/helper";
 import { summaryServices } from "@/services/summary.services";
 import { tokenServices } from "@/services/token.service";
+
+import Link from "next/link";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -110,7 +112,7 @@ export default function Dashboard() {
         {
           label: "Total",
           data: data,
-          borderWidth: 1,
+          borderColor: backgroundColor || biColors,
           backgroundColor: backgroundColor || biColors,
         },
       ],
@@ -184,9 +186,12 @@ export default function Dashboard() {
   }, [trackerOptions]);
 
   return (
-    <div className="min-h-screen pt-4 pb-8">
-      <div className="bg-white min-w-screen py-4">
+    <div className="min-h-screen pt-4 pb-16">
+      <div className="bg-white min-w-screen py-4 flex justify-between items-center">
         <h1 className="font-bold text-[32px] text-black ml-8">Dashboard</h1>
+        <Link href="/login" onClick={tokenServices.removeAccessToken} className="mr-8 md:hidden">
+          <MdLogout fill="black" size="2em" />
+        </Link>
       </div>
       {/* Content */}
       <div className="flex flex-col gap-y-5 p-8">
@@ -197,28 +202,40 @@ export default function Dashboard() {
             return (
               <div
                 key={index}
-                className="flex flex-col justify-between w-full md:flex-grow h-[250px] p-4 rounded-lg shadow-xl hover:shadow-2xl bg-main"
+                className="flex flex-col justify-between w-full md:flex-grow h-[150px] md:h-[250px] p-4 rounded-lg shadow-xl hover:shadow-2xl bg-gray-400"
               >
-                <Icon size="3.5em" className="bg-white p-2 rounded-xl" />
-                <div className="">
-                  <p className="sm:text-xl font-medium">{name}</p>
-                  <p className="sm:text-2xl font-semibold">
-                    Rp{convertNumberToCurrencyFormat(amount)}
-                  </p>
-                </div>
+                {loadingSummary ? (
+                  <>
+                    <div className="w-14 h-14 bg-white rounded-md animate-pulse"></div>
+                    <div>
+                      <div className="animate-pulse h-[20px] w-[30%] bg-gray-300 rounded-md mt-2"></div>
+                      <div className="animate-pulse h-[20px] w-[50%] bg-gray-300 rounded-md mt-2"></div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <Icon size="3.5em" className="bg-white p-2 rounded-xl" />
+                    <div>
+                      <p className="sm:text-xl font-medium">{name}</p>
+                      <p className="sm:text-2xl font-semibold">
+                        Rp{convertNumberToCurrencyFormat(amount)}
+                      </p>
+                    </div>
+                  </>
+                )}
               </div>
             );
           })}
         </div>
 
-        <div className="grid grid-rows-1 md:grid-cols-3 md:gap-x-5 gap-y-5 min-h-[500px]">
+        <div className="grid grid-rows-1 md:grid-cols-2 lg:grid-cols-3 md:gap-x-5 gap-y-5 md:min-h-[500px]">
           {/* Graph */}
           {loadingTracker ? (
-            <div className="row-span-1 md:col-span-2 grid place-items-center bg-white shadow-xl rounded-xl p-5">
+            <div className="row-span-1 md:col-span-1 lg:col-span-2 grid place-items-center bg-white shadow-xl rounded-xl p-5 ">
               <span className="loading loading-dots loading-lg"></span>
             </div>
           ) : (
-            <div className="row-span-1 md:col-span-2 bg-white shadow-xl rounded-xl p-5">
+            <div className="row-span-1 md:col-span-1 lg:col-span-2 bg-white shadow-xl rounded-xl p-5 max-w-full overflow-x-auto">
               <div className="flex flex-col md:flex-row items-center justify-between">
                 <p className="font-bold text-xl mb-5 md:mb-0">Statistics</p>
                 <div className="flex gap-x-3">
@@ -243,12 +260,13 @@ export default function Dashboard() {
                       <p>Income </p>
                     </div>
                   </div>
-
-                  {isTrackingMonth ? (
-                    <LineChart data={trackerChartData} />
-                  ) : (
-                    <BarChart data={trackerChartData} />
-                  )}
+                  <div className="min-w-[350px]">
+                    {isTrackingMonth ? (
+                      <LineChart data={trackerChartData} />
+                    ) : (
+                      <BarChart data={trackerChartData} />
+                    )}
+                  </div>
                 </>
               ) : (
                 <p className="grid place-items-center w-full h-full ">
@@ -266,7 +284,7 @@ export default function Dashboard() {
           ) : (
             <div className="col-span-1 bg-white shadow-xl rounded-xl p-5">
               <div className="flex flex-col md:flex-row justify-between items-center">
-                <p className="font-bold text-xl mb-5 md:mt-0">Overview</p>
+                <p className="font-bold text-xl mb-5 md:mb-0">Overview</p>
                 <SelectKind value={kind} setValue={setKind} />
               </div>
               {doughnutChartData.datasets?.length === 0 ||
@@ -275,8 +293,10 @@ export default function Dashboard() {
                   Belum terdapat data pada kategori tersebut ☹️
                 </p>
               ) : (
-                <div className="mt-10">
-                  <DoughnutChart data={doughnutChartData} />
+                <div className="flex justify-center items-center">
+                  <div className="mt-10 w-[70%] md:w-full">
+                    <DoughnutChart data={doughnutChartData} />
+                  </div>
                 </div>
               )}
             </div>

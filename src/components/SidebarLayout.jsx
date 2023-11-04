@@ -5,45 +5,13 @@ import { useSidebarStore } from "@/stores/sidebar.store";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-import DashboardIcon from "public/assets/dashboardIcon.png";
-import ExpenseIcon from "public/assets/expenseIcon.png";
-import FnewsIcon from "public/assets/fNewsIcon.png";
-import FintrackLogo from "public/assets/fintrackLogo.png";
-import GoalIcon from "public/assets/goalsIcon.png";
-import IncomeIcon from "public/assets/incomeIcon.png";
-import { GiHamburgerMenu } from "react-icons/gi";
-
 import { useShallow } from "zustand/react/shallow";
-import "../styles/SidebarLayout.css";
 
-const sidebarItems = [
-  {
-    name: "Dashboard",
-    icon: DashboardIcon,
-    path: "/",
-  },
-  {
-    name: "Income",
-    icon: IncomeIcon,
-    path: "/income",
-  },
-  {
-    name: "Expense",
-    icon: ExpenseIcon,
-    path: "/expense",
-  },
-  {
-    name: "Goal",
-    icon: GoalIcon,
-    path: "/goal",
-  },
-  {
-    name: "F-News",
-    icon: FnewsIcon,
-    path: "/news",
-  },
-];
+import { sidebarItems, sidebarItemsOnSmallScreen } from "@/enums/sidebar.enum";
+
+import FintrackLogo from "public/assets/fintrackLogo.png";
+import { GiHamburgerMenu } from "react-icons/gi";
+import "@/styles/SidebarLayout.css";
 
 export default function SidebarLayout() {
   const { showSidebar, setShowSidebar } = useSidebarStore(
@@ -64,7 +32,39 @@ export default function SidebarLayout() {
   };
 
   return (
-    <div className={`sidebar ${showSidebar ? "" : "close"}`}>
+    <>
+      <SmallScreenSidebar activeMenu={checkActiveMenu} />
+      <MediumScreenSidebar
+        showSidebar={showSidebar}
+        setShowSidebar={setShowSidebar}
+        activeMenu={checkActiveMenu}
+      />
+    </>
+  );
+}
+
+const SmallScreenSidebar = ({ activeMenu }) => {
+  return (
+    <div className="fixed bottom-0 w-screen h-20 z-10 bg-[#080325] flex justify-around items-center md:hidden">
+      {sidebarItemsOnSmallScreen.map((item, index) => {
+        const { name, icon, path } = item;
+        const isActiveMenu = activeMenu(name, path);
+
+        return (
+          <Link key={index} href={path}>
+            <div className={`${isActiveMenu ? "mb-4" : ""}`}>
+              <Image src={icon} alt={`${name} Icon`} width={auto} height={auto} />
+            </div>
+          </Link>
+        );
+      })}
+    </div>
+  );
+};
+
+const MediumScreenSidebar = ({ showSidebar, setShowSidebar, activeMenu }) => {
+  return (
+    <div className={`sidebar ${showSidebar ? "" : "close"} hidden md:flex`}>
       <div className={`header ${showSidebar ? "" : "close"}`}>
         {showSidebar && (
           <>
@@ -79,7 +79,7 @@ export default function SidebarLayout() {
       <div className="main-navigation">
         {sidebarItems.map((item, index) => {
           const { name, icon, path } = item;
-          let isActiveMenu = checkActiveMenu(name, path);
+          let isActiveMenu = activeMenu(name, path);
           return (
             <Link key={index} href={path}>
               <div className={`item ${isActiveMenu && "selected"}`}>
@@ -97,17 +97,19 @@ export default function SidebarLayout() {
         })}
       </div>
       <div className="footer">
-        <Link href="/login" onClick={tokenServices.removeAccessToken} className="item">
-          <Image
-            className="icon-chat"
-            src="/assets/logoutIcon.png"
-            alt="Menu Icon"
-            width={22}
-            height={22}
-          />
-          {showSidebar && "Logout"}
+        <Link href="/login" onClick={tokenServices.removeAccessToken}>
+          <div className="item">
+            <Image
+              className="icon-chat"
+              src="/assets/logoutIcon.png"
+              alt="Menu Icon"
+              width={22}
+              height={22}
+            />
+            {showSidebar && <div className="text-base ">Logout</div>}
+          </div>
         </Link>
       </div>
     </div>
   );
-}
+};
