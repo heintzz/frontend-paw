@@ -53,7 +53,7 @@ const SmallScreenSidebar = ({ activeMenu }) => {
         return (
           <Link key={index} href={path}>
             <div className={`${isActiveMenu ? "mb-4" : ""}`}>
-              <Image src={icon} alt={`${name} Icon`} width={auto} height={auto} />
+              <Image src={icon} alt={`${name} Icon`} width="auto" height="auto" />
             </div>
           </Link>
         );
