@@ -3,11 +3,11 @@ import { headers } from "../../next.config";
 import { tokenServices } from "./token.service";
 const BASE_URL = process.env.API_BASE_URL;
 
-const getGoalsData = async () => {
+const getGoalData = async () => {
     let token = tokenServices.getAccessToken();
     return new Promise((resolve, reject) => {
       axios
-        .get(`${BASE_URL}/goals`, {
+        .get(`${BASE_URL}/goal`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -21,11 +21,11 @@ const getGoalsData = async () => {
     });
   };
 
-  const createGoalsData  = async (body) => {
+  const createGoalData  = async (body) => {
     let token = tokenServices.getAccessToken();
     return new Promise((resolve, reject) => {
       axios
-        .post(`${BASE_URL}/goals`, body, {
+        .post(`${BASE_URL}/goal`, body, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -39,11 +39,11 @@ const getGoalsData = async () => {
     });
   };
 
-  const editGoalsData = async (body, id) => {
+  const editGoalData = async (body, id) => {
     let token = tokenServices.getAccessToken();
     return new Promise((resolve, reject) => {
       axios
-        .patch(`${BASE_URL}/goals/${id}`, body, {
+        .patch(`${BASE_URL}/goal/${id}`, body, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -57,11 +57,11 @@ const getGoalsData = async () => {
     });
   };
 
-  const deleteGoalsData = async (id) => {
+  const deleteGoalData = async (id) => {
     let token = tokenServices.getAccessToken();
     return new Promise((resolve, reject) => {
       axios
-        .delete(`${BASE_URL}/goals/${id}`, {
+        .delete(`${BASE_URL}/goal/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -75,4 +75,4 @@ const getGoalsData = async () => {
     });
   };
 
-  export const goalsServices = { getGoalsData, createGoalsData, editGoalsData, deleteGoalsData};
+  export const goalServices = { getGoalData, createGoalData, editGoalData, deleteGoalData};
