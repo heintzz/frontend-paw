@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useSorting = (data) => {
+const useSorting = (data, amountType = "incomeAmount") => {
   const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
 
@@ -27,9 +27,7 @@ const useSorting = (data) => {
       });
     } else if (sortColumn === "amount") {
       return [...data].sort((a, b) => {
-        return sortOrder === "asc"
-          ? a.incomeAmount - b.incomeAmount
-          : b.incomeAmount - a.incomeAmount;
+        return sortOrder === "asc" ? a[amountType] - b[amountType] : b[amountType] - a[amountType];
       });
     }
     return data;

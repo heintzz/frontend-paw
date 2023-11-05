@@ -35,7 +35,7 @@ const CreatePage = () => {
   };
 
   return (
-    <div className="pt-8 relative">
+    <div className="pt-4">
       <div className="bg-white py-4 flex items-center">
         <button className="ml-8" onClick={() => router.push("/income")}>
           <img className="w-6 h-10" src="/assets/back button.png" />
@@ -43,10 +43,10 @@ const CreatePage = () => {
         <h1 className="font-bold text-[32px] text-black ml-8">Create Income</h1>
       </div>
       <div className="flex items-center justify-center mt-8">
-        <div className="p-4 rounded-xl">
+        <div className="p-4 min-w-[50%] max-w-[800px]">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
-              <label className="font-semibold text-[20px] text-black">Activity</label>
+              <label className="font-semibold text-[20px] text-black mb-2">Activity</label>
               <Controller
                 name="activity"
                 control={control}
@@ -55,7 +55,7 @@ const CreatePage = () => {
                   <input
                     {...field}
                     type="text"
-                    className="w-full py-2 px-4 rounded-md bg-white outline outline-2 mt-2"
+                    className="input input-bordered focus:outline-black focus:border-none w-full mt-2"
                     placeholder="Income name"
                   />
                 )}
@@ -71,13 +71,13 @@ const CreatePage = () => {
                   <input
                     {...field}
                     type="number"
-                    className="w-full py-2 px-4 rounded-md bg-white outline outline-2 mt-2"
+                    className="input input-bordered focus:outline-black focus:border-none w-full mt-2"
                     placeholder="eg: 200000"
                   />
                 )}
               />
             </div>
-            <div className="mb-4 flex items-center">
+            <div className="mb-1 flex items-center">
               <label className="font-semibold text-[20px] text-black mr-4">Monthly</label>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input
@@ -95,7 +95,7 @@ const CreatePage = () => {
                 ></div>
               </label>
             </div>
-            <div className="text-black text-sm mb-6">*set as a monthly income</div>
+            <div className="text-black text-sm mb-10">*set as a monthly income</div>
             <div className="text-center">
               <button
                 type="submit"

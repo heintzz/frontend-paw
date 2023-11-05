@@ -13,15 +13,11 @@ import { Line } from "react-chartjs-2";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-export const options = {
+const options = {
   responsive: true,
   plugins: {
-    legend: {
-      display: false,
-    },
-    title: {
-      display: false,
-    },
+    legend: false,
+    title: false,
     tooltip: {
       titleFont: {
         family: "Poppins",
@@ -39,14 +35,20 @@ export const options = {
       },
     },
   },
+  interaction: {
+    mode: "x",
+  },
   scales: {
     x: {
+      type: "linear",
+      beginAt: 1,
       ticks: {
         font: {
           family: "Poppins",
           size: 12,
         },
       },
+      min: 1,
     },
     y: {
       grace: "5%",

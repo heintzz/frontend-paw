@@ -97,7 +97,7 @@ const IncomePage = () => {
   };
 
   return (
-    <div className="pt-4 pb-8">
+    <div className="pt-4 pb-24">
       <div className="bg-white min-w-screen py-4 flex items-center justify-between">
         <h1 className="font-bold text-[32px] text-black ml-8">Income</h1>
         <div className="flex space-x-4 mr-4">
@@ -210,7 +210,7 @@ const IncomePage = () => {
                   {sortColumn === "amount" && sortOrder === "asc" ? "▲" : "▼"}
                 </button>
               </th>
-              <th>Status</th>
+              <th>Status Penambahan</th>
               <th className="text-center">Action</th>
             </tr>
           </thead>
@@ -227,7 +227,7 @@ const IncomePage = () => {
                       item.autoAdd ? "bg-info" : "bg-main"
                     } text-white w-fit px-4 py-2 font-semibold`}
                   >
-                    {item.autoAdd ? "Ditambahkan Otomatis" : "Ditambahkan Manual"}
+                    {item.autoAdd ? "Otomatis" : "Manual"}
                   </div>
                 </td>
                 <td>
