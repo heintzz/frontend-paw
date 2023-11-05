@@ -2,26 +2,35 @@
 
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { incomeServices } from "@/services/goal.services";
+import { goalServices } from "@/services/goal.services";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
-const CreatePage = () => {
+const EditPage = () => {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const goalName = searchParams.get("name");
+  const goalDescription = searchParams.get("desc");
+  const goalPrice = searchParams.get("price");
+  const goalStore = searchParams.get("store");
+
   const { control, handleSubmit, reset } = useForm();
   const router = useRouter();
 
   const onSubmit = (data) => {
     (async () => {
-      const postData = {
-        goalName: data.activity,
-        goalDescription: data.amount,
-        incomeMonthly: isMonthly,
+      const patchData = {
+        goalName: data.name,
+        goalDescription: data.desc,
+        goalPrice: data.price,
+        goalStore: data.store
       };
 
       try {
-        const res = await incomeServices.createIncomeData(postData);
+        const res = await goalServices.editgoalData(patchData, id);
         if (res.success) {
           reset();
-          router.push("/income");
+          router.push("/goal");
         }
       } catch (error) {
         console.error(error);
@@ -29,39 +38,43 @@ const CreatePage = () => {
     })();
   };
 
+  const handleMonthlyToggle = () => {
+    setIsMonthly(!isMonthly);
+  };
+
   return (
-    <div className="pt-4">
+    <div className="pt-8 pb-24">
       <div className="bg-white py-4 flex items-center">
-        <button className="ml-8" onClick={() => router.push("/income")}>
+        <button className="ml-8" onClick={() => router.push("/goal")}>
           <img className="w-6 h-10" src="/assets/back button.png" />
         </button>
-        <h1 className="font-bold text-[32px] text-black ml-8">Create Income</h1>
+        <h1 className="font-bold text-[32px] text-black ml-8">Edit Goal</h1>
       </div>
       <div className="flex items-center justify-center mt-8">
         <div className="p-4 min-w-[50%] max-w-[800px]">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
-              <label className="font-semibold text-[20px] text-black mb-2">Activity</label>
+              <label className="font-semibold text-[20px] text-black">Price</label>
               <Controller
-                name="activity"
+                name="price"
                 control={control}
-                defaultValue=""
+                defaultValue={goalName}
                 render={({ field }) => (
                   <input
                     {...field}
-                    type="text"
+                    type="number"
                     className="input input-bordered focus:outline-black focus:border-none w-full mt-2"
-                    placeholder="Income name"
+                    placeholder="eg. 200000"
                   />
                 )}
               />
             </div>
             <div className="mb-4">
-              <label className="font-semibold text-[20px] text-black">Amount</label>
+              <label className="font-semibold text-[20px] text-black">Add Amount Saving</label>
               <Controller
-                name="amount"
+                name="add amount saving"
                 control={control}
-                defaultValue=""
+                defaultValue={incomeAmount}
                 render={({ field }) => (
                   <input
                     {...field}
@@ -72,31 +85,12 @@ const CreatePage = () => {
                 )}
               />
             </div>
-            <div className="mb-1 flex items-center">
-              <label className="font-semibold text-[20px] text-black mr-4">Monthly</label>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="sr-only peer"
-                  value={isMonthly}
-                  onChange={handleMonthlyToggle}
-                />
-                <div
-                  className={`w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 rounded-full peer ${
-                    isMonthly
-                      ? "peer-checked:after:translate-x-full peer-checked:after:border-white"
-                      : ""
-                  } after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-black`}
-                ></div>
-              </label>
-            </div>
-            <div className="text-black text-sm mb-10">*set as a monthly income</div>
             <div className="text-center">
               <button
                 type="submit"
                 className="rounded-full text-white px-4 py-2 bg-main hover:bg-main-hover active:bg-main-active"
               >
-                Create
+                Save
               </button>
             </div>
           </form>
@@ -106,4 +100,4 @@ const CreatePage = () => {
   );
 };
 
-export default CreatePage;
+export default EditPage;
