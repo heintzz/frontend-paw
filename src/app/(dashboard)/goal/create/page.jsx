@@ -6,7 +6,7 @@ import { incomeServices } from "@/services/goal.services";
 import { useRouter } from "next/navigation";
 
 const CreatePage = () => {
-  const { control, handleSubmit, reset } = useForm();
+  const { control, handleSubmit, reset, register} = useForm();
   const router = useRouter();
 
   const onSubmit = (data) => {
@@ -15,7 +15,8 @@ const CreatePage = () => {
         goalName: data.name,
         goalDescription: data.desc,
         goalPrice: data.price,
-        goalStore: data.store
+        goalStore: data.store,
+        goalImage:data.image
       };
 
       try {
@@ -37,11 +38,9 @@ const CreatePage = () => {
           <img className="w-6 h-10" src="/assets/back button.png" />
         </button>
         <h1 className="font-bold text-[32px] text-black ml-8">Create Goal</h1>
-      </div>
-
-      
+      </div>      
         <div className="flex items-center justify-center mt-8">
-            <div className="p-4 min-w-[30%] max-w-[800px]">
+          <div className="p-4 min-w-[30%] max-w-[800px]">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-4">
                 <label className="font-semibold text-[20px] text-black mb-2">Name of Goal</label>
@@ -107,6 +106,25 @@ const CreatePage = () => {
                     )}
                 />
                 </div>
+                <div className="mb-4">
+                <label className="font-semibold text-[20px] text-black">Goal Image</label>
+                <div className="flex items-center">
+                  <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    className="hidden"
+                    id="goalImageInput"  
+                    {...register("image")}
+                  />
+                  <label
+                    htmlFor="goalImageInput"
+                    className="cursor-pointer p-2 border border-gray-300 rounded-md ml-2"
+                  >
+                    Choose Image
+                  </label>
+                </div>
+              </div>
                 <div className="text-center">
                 <button
                     type="submit"
