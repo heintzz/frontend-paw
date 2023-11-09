@@ -160,10 +160,10 @@ export default function Dashboard() {
         const res = await summaryServices.getSummary();
         if (res.success) {
           setSummary(res?.data);
+          setLoadingSummary(false);
         }
       } catch (error) {
         console.error(error);
-      } finally {
         setLoadingSummary(false);
       }
     })();
@@ -176,10 +176,10 @@ export default function Dashboard() {
         const res = await summaryServices.getTrackerHistory(trackerOptions);
         if (res.success) {
           setTracker(res?.data);
+          setLoadingTracker(false);
         }
       } catch (error) {
         console.error(error);
-      } finally {
         setLoadingTracker(false);
       }
     })();
