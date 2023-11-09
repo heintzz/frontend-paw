@@ -68,12 +68,6 @@ const GoalPage = () => {
 
         
       </div>
-
-
-
-
-
-
     </div>
   );
 };

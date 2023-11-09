@@ -9,10 +9,8 @@ import { useSearchParams } from "next/navigation";
 const EditPage = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-  const goalName = searchParams.get("name");
-  const goalDescription = searchParams.get("desc");
   const goalPrice = searchParams.get("price");
-  const goalStore = searchParams.get("store");
+  const goalAddAmountSaving = searchParams.get("addamountsaving");
 
   const { control, handleSubmit, reset } = useForm();
   const router = useRouter();
@@ -20,14 +18,11 @@ const EditPage = () => {
   const onSubmit = (data) => {
     (async () => {
       const patchData = {
-        goalName: data.name,
-        goalDescription: data.desc,
         goalPrice: data.price,
-        goalStore: data.store
+        goalAddAmountSaving: data.addamountsaving,
       };
-
       try {
-        const res = await goalServices.editgoalData(patchData, id);
+        const res = await goalServices.editGoalData(patchData, id);
         if (res.success) {
           reset();
           router.push("/goal");
@@ -38,12 +33,8 @@ const EditPage = () => {
     })();
   };
 
-  const handleMonthlyToggle = () => {
-    setIsMonthly(!isMonthly);
-  };
-
-  return (
-    <div className="pt-8 pb-24">
+    return (
+    <div className="pt-8 relative">
       <div className="bg-white py-4 flex items-center">
         <button className="ml-8" onClick={() => router.push("/goal")}>
           <img className="w-6 h-10" src="/assets/back button.png" />
@@ -51,20 +42,19 @@ const EditPage = () => {
         <h1 className="font-bold text-[32px] text-black ml-8">Edit Goal</h1>
       </div>
       <div className="flex items-center justify-center mt-8">
-        <div className="p-4 min-w-[50%] max-w-[800px]">
+        <div className="p-4 rounded-xl">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
               <label className="font-semibold text-[20px] text-black">Price</label>
               <Controller
                 name="price"
                 control={control}
-                defaultValue={goalName}
+                defaultValue={goalPrice}
                 render={({ field }) => (
                   <input
                     {...field}
                     type="number"
-                    className="input input-bordered focus:outline-black focus:border-none w-full mt-2"
-                    placeholder="eg. 200000"
+                    className="w-full py-2 px-4 rounded-md bg-white outline outline-2 mt-2"
                   />
                 )}
               />
@@ -74,17 +64,17 @@ const EditPage = () => {
               <Controller
                 name="add amount saving"
                 control={control}
-                defaultValue={incomeAmount}
+                defaultValue={goalAddAmountSaving}
                 render={({ field }) => (
                   <input
                     {...field}
                     type="number"
-                    className="input input-bordered focus:outline-black focus:border-none w-full mt-2"
-                    placeholder="eg: 200000"
+                    className="w-full py-2 px-4 rounded-md bg-white outline outline-2 mt-2"
+                    
                   />
                 )}
               />
-            </div>
+            </div>  
             <div className="text-center">
               <button
                 type="submit"
