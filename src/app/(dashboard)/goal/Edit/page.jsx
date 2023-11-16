@@ -11,6 +11,11 @@ const EditPage = () => {
   const id = searchParams.get("id");
   const goalPrice = searchParams.get("price");
   const goalAddAmountSaving = searchParams.get("addamountsaving");
+  const goalName = searchParams.get("name");
+  const goalDescription = searchParams.get("desc");
+  const goalAmount = searchParams.get("amount");
+  const goalStore= searchParams.get("store");
+  const goalImage = searchParams.get ("image");
 
   const { control, handleSubmit, reset } = useForm();
   const router = useRouter();
@@ -19,7 +24,12 @@ const EditPage = () => {
     (async () => {
       const patchData = {
         goalPrice: data.price,
-        goalAddAmountSaving: data.addamountsaving,
+        savingsAmount: data.addamountsaving,
+        goalName: data.name,
+        goalDescription: data.desc,
+        goalAmount: data.amount,
+        goalStore: data.store,
+        goalImage:image
       };
       try {
         const res = await goalServices.editGoalData(patchData, id);
@@ -29,7 +39,7 @@ const EditPage = () => {
         }
       } catch (error) {
         console.error(error);
-      }
+      };
     })();
   };
 
@@ -62,15 +72,14 @@ const EditPage = () => {
             <div className="mb-4">
               <label className="font-semibold text-[20px] text-black">Add Amount Saving</label>
               <Controller
-                name="add amount saving"
+                name="addamountsaving"
                 control={control}
                 defaultValue={goalAddAmountSaving}
                 render={({ field }) => (
                   <input
                     {...field}
                     type="number"
-                    className="w-full py-2 px-4 rounded-md bg-white outline outline-2 mt-2"
-                    
+                    className="w-full py-2 px-4 rounded-md bg-white outline outline-2 mt-2"  
                   />
                 )}
               />

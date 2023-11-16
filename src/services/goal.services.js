@@ -13,10 +13,10 @@ const getGoalData = async () => {
           },
         })
         .then((response) => {
-          resolve(response.data);
+          resolve(response?.data);
         })
         .catch((err) => {
-          reject(err.response.data);
+          reject(err.response?.data);
         });
     });
   };
@@ -31,10 +31,10 @@ const getGoalData = async () => {
           },
         })
         .then((response) => {
-          resolve(response.data);
+          resolve(response?.data);
         })
         .catch((err) => {
-          reject(err.response.data);
+          reject(err.response?.data);
         });
     });
   };
@@ -49,10 +49,10 @@ const getGoalData = async () => {
           },
         })
         .then((response) => {
-          resolve(response.data);
+          resolve(response?.data);
         })
         .catch((err) => {
-          reject(err.response.data);
+          reject(err.response?.data);
         });
     });
   };
@@ -67,10 +67,10 @@ const getGoalData = async () => {
           },
         })
         .then((response) => {
-          resolve(response.data);
+          resolve(response?.data);
         })
         .catch((err) => {
-          reject(err.response.data);
+          reject(err.response?.data);
         });
     });
   };

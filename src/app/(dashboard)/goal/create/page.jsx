@@ -2,23 +2,32 @@
 
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { incomeServices } from "@/services/goal.services";
+import { goalServices } from "@/services/goal.services";
 import { useRouter } from "next/navigation";
 
 const CreatePage = () => {
   const { control, handleSubmit, reset, register} = useForm();
   const router = useRouter();
+  const [image, setImage] = useState();
+
+  const uploadImage = (e) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      setImage(reader.result);
+    };
+  };
 
   const onSubmit = (data) => {
     (async () => {
       const postData = {
         goalName: data.name,
         goalDescription: data.desc,
-        goalPrice: data.price,
+        goalAmount: data.amount,
         goalStore: data.store,
-        goalImage:data.image
+        goalImage:image
       };
-
+      console.log(postData)
       try {
         const res = await goalServices.createGoalData(postData);
         if (res.success) {
@@ -45,7 +54,7 @@ const CreatePage = () => {
                 <div className="mb-4">
                 <label className="font-semibold text-[20px] text-black mb-2">Name of Goal</label>
                 <Controller
-                    name="name of goal"
+                    name="name"
                     control={control}
                     defaultValue=""
                     render={({ field }) => (
@@ -61,7 +70,7 @@ const CreatePage = () => {
                 <div className="mb-4">
                 <label className="font-semibold text-[20px] text-black">Description</label>
                 <Controller
-                    name="description"
+                    name="desc"
                     control={control}
                     defaultValue=""
                     render={({ field }) => (
@@ -77,7 +86,7 @@ const CreatePage = () => {
                 <div className="mb-4">
                 <label className="font-semibold text-[20px] text-black">Price</label>
                 <Controller
-                    name="price"
+                    name="amount"
                     control={control}
                     defaultValue=""
                     render={({ field }) => (
@@ -115,8 +124,9 @@ const CreatePage = () => {
                     accept="image/*"
                     className="hidden"
                     id="goalImageInput"  
-                    {...register("image")}
+                    onChange={uploadImage}
                   />
+                  {image&&<img src = {image}/>}
                   <label
                     htmlFor="goalImageInput"
                     className="cursor-pointer p-2 border border-gray-300 rounded-md ml-2"
@@ -135,8 +145,7 @@ const CreatePage = () => {
                 </div>
             </form>
             </div>
-            </div>
-        
+            </div>        
     </div>
   );
 };
