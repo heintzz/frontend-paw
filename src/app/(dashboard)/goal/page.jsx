@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
 import useSorting from "@/app/hooks/useSorting";
 import DeleteConfirmation from "@/components/DeleteConfirmation";
 import { formatDate } from "@/helpers/helper";
@@ -17,6 +16,8 @@ const GoalPage = () => {
 
   const [goalData, setGoalData] = useState([]);
   const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
+  //const savingsAmount = goal.goalsavingsAmount !== undefined ? goal.goalsavingsAmount : 0;
+
 
   useEffect(() => {
     // Fetch goal data and update the state
@@ -79,25 +80,40 @@ const GoalPage = () => {
              </div>
          </div>
          <div className="mr-20">
-           <h1 className="font-bold text-[20px] text-black mb-5">Saving Amount<br></br>Rp{goal.goalsavingsAmount}</h1>
+           <h1 className="font-bold text-[20px] text-black mb-5 ">Saving Amount<br></br>Rp{goal.goalsavingsAmount}</h1>
            <div className="flex items-center">
             <div className="font-bold text-[40px] grid w-32 h-32 bg-base-300 rounded-xl place-items-center"> {goal.goalsavingsAmount}% </div>
             <div className="flex flex-col justify-center items-center ml-4">
-              <button>
-                <Image width={50} height={50} src="/assets/Edit1.png" alt="Edit" />
-              </button>
-              <div className="mt-2"> {/* Add a margin-top for the desired gap */}
+              <div>
+                <Link
+                  href={{
+                    pathname: "/goal/edit",
+                    query:{
+                      id: goal._id,
+                      amount: goal.goalAmount,
+                      savingAmount:  goal.goalsavingsAmount,
+                    },
+                  }}
+                >
+                  <button>
+                    <Image width={55} height={55} src="/assets/Edit1.png" alt="Edit" />
+                  </button>
+                </Link>
+              </div>
+              <div className="mt-2"> 
                 <button onClick={showDeleteConfirmation}>
-                  <Image width={50} height={50} src="/assets/Delete1.png" alt="Delete" />
+                  <Image width={55} height={55} src="/assets/Delete1.png" alt="Delete" />
                 </button>
+
+                <DeleteConfirmation
+                isOpen={isDeleteConfirmationVisible}
+                hideDeleteConfirmation={hideDeleteConfirmation}
+                handleDelete={() =>handleDelete_id(goal._id)}
+              />
               </div>
             </div>
           </div>
-          <DeleteConfirmation
-          isOpen={isDeleteConfirmationVisible}
-          hideDeleteConfirmation={hideDeleteConfirmation}
-          handleDelete={() => handleDelete_id}
-          />
+          
          </div>
        </div>
       ))}
