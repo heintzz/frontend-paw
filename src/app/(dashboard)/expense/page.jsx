@@ -21,6 +21,7 @@ const ExpensePage = () => {
   const [maxAmount, setMaxAmount] = useState("");
   const [applyFilter, setApplyFilter] = useState(false);
   const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
+  const [deleteId, setDeleteId] = useState(0);
 
   const [sortOrder, sortColumn, toggleSortOrder, sortData] = useSorting(
     expenseData,
@@ -67,8 +68,9 @@ const ExpensePage = () => {
     setMaxAmount(e.target.value);
   };
 
-  const showDeleteConfirmation = () => {
+  const showDeleteConfirmation = (id) => {
     setDeleteConfirmationVisible(true);
+    setDeleteId(id);
   };
 
   const hideDeleteConfirmation = () => {
@@ -82,7 +84,6 @@ const ExpensePage = () => {
         if (res.success) {
           window.location.reload();
           hideDeleteConfirmation();
-          u;
         }
       } catch (error) {
         console.error(error);
@@ -254,7 +255,7 @@ const ExpensePage = () => {
                       </Link>
                     </div>
                     <div>
-                      <button onClick={showDeleteConfirmation}>
+                      <button onClick={() => showDeleteConfirmation(item._id)}>
                         <img className="w-6 h-6" src="/assets/trash.png" alt="Delete" />
                       </button>
                     </div>
@@ -262,7 +263,7 @@ const ExpensePage = () => {
                     <DeleteConfirmation
                       isOpen={isDeleteConfirmationVisible}
                       hideDeleteConfirmation={hideDeleteConfirmation}
-                      handleDelete={() => handleDelete(item._id)}
+                      handleDelete={() => handleDelete(deleteId)}
                     />
                   </div>
                 </td>

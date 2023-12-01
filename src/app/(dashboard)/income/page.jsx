@@ -22,6 +22,7 @@ const IncomePage = () => {
   const [maxAmount, setMaxAmount] = useState("");
   const [applyFilter, setApplyFilter] = useState(false);
   const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
+  const [deleteId, setDeleteId] = useState(0);
 
   const [sortOrder, sortColumn, toggleSortOrder, sortData] = useSorting(incomeData);
 
@@ -66,8 +67,9 @@ const IncomePage = () => {
     setMaxAmount(e.target.value);
   };
 
-  const showDeleteConfirmation = () => {
+  const showDeleteConfirmation = (id) => {
     setDeleteConfirmationVisible(true);
+    setDeleteId(id);
   };
 
   const hideDeleteConfirmation = () => {
@@ -250,7 +252,7 @@ const IncomePage = () => {
                       </Link>
                     </div>
                     <div>
-                      <button onClick={showDeleteConfirmation}>
+                      <button onClick={() => showDeleteConfirmation(item._id)}>
                         <Image width={30} height={30} src="/assets/trash.png" alt="Delete" />
                       </button>
                     </div>
@@ -258,7 +260,7 @@ const IncomePage = () => {
                     <DeleteConfirmation
                       isOpen={isDeleteConfirmationVisible}
                       hideDeleteConfirmation={hideDeleteConfirmation}
-                      handleDelete={() => handleDelete(item._id)}
+                      handleDelete={() => handleDelete(deleteId)}
                     />
                   </div>
                 </td>
