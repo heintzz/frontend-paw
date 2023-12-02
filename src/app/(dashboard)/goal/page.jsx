@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import AlertResponse from "@/components/AlertResponse";
 import DeleteConfirmation from "@/components/DeleteConfirmation";
 import { goalServices } from "@/services/goal.services";
 import { convertNumberToCurrencyFormat } from "@/helpers/helper";
@@ -61,6 +62,7 @@ const GoalPage = () => {
 
   return (
     <div className="pt-4 pb-24">
+      <AlertResponse />
       <div className="bg-white min-w-screen py-4 flex items-center justify-between">
         <h1 className="font-bold text-[32px] text-black ml-8">Goal</h1>
         <div className="flex space-x-4 mr-20">
