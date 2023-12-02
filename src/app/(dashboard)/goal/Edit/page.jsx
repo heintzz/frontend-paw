@@ -55,6 +55,36 @@ const EditPage = () => {
         <div className="p-4 rounded-xl">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
+              <label className="font-semibold text-[20px] text-black">Name of Goal</label>
+              <Controller
+                name="name"
+                control={control}
+                defaultValue={goalName}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    type="text"
+                    className="w-full py-2 px-4 rounded-md bg-white outline outline-2 mt-2"
+                  />
+                )}
+              />
+            </div>
+            <div className="mb-4">
+              <label className="font-semibold text-[20px] text-black">Description</label>
+              <Controller
+                name="desc"
+                control={control}
+                defaultValue={goalDescription}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    type="text"
+                    className="w-full py-2 px-4 rounded-md bg-white outline outline-2 mt-2"
+                  />
+                )}
+              />
+            </div>
+            <div className="mb-4">
               <label className="font-semibold text-[20px] text-black">Price</label>
               <Controller
                 name="price"
@@ -70,6 +100,21 @@ const EditPage = () => {
               />
             </div>
             <div className="mb-4">
+              <label className="font-semibold text-[20px] text-black">Store</label>
+              <Controller
+                name="store"
+                control={control}
+                defaultValue={goalStore}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    type="text"
+                    className="w-full py-2 px-4 rounded-md bg-white outline outline-2 mt-2"
+                  />
+                )}
+              />
+            </div>
+            {/* <div className="mb-4">
               <label className="font-semibold text-[20px] text-black">Add Amount Saving</label>
               <Controller
                 name="addamountsaving"
@@ -83,7 +128,7 @@ const EditPage = () => {
                   />
                 )}
               />
-            </div>  
+            </div>   */}
             <div className="text-center">
               <button
                 type="submit"
