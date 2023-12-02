@@ -132,9 +132,22 @@ const GoalPage = () => {
                     <button className="bg-main rounded-full p-2">
                       <FaPlus size="1.45em" fill="white" />
                     </button>
-                    <button className="bg-info rounded-full p-2">
-                      <MdModeEdit size="1.45em" fill="white" />
-                    </button>
+                    <Link
+                      href={{
+                        pathname: "/goal/edit",
+                        query: {
+                          id: item._id,
+                          name: item.goalName,
+                          description: item.goalDescription,
+                          store: item.goalStore,
+                          price: item.goalPrice,
+                        },
+                      }}
+                    >
+                      <button className="bg-info rounded-full p-2">
+                        <MdModeEdit size="1.45em" fill="white" />
+                      </button>
+                    </Link>
                     <button
                       onClick={showDeleteConfirmation}
                       className="bg-error rounded-full p-2"
