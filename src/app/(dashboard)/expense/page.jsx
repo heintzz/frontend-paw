@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -198,7 +199,7 @@ const ExpensePage = () => {
       )}
 
       <div className="bg-white mt-6 rounded-md mx-8 overflow-x-auto">
-        <table className="table">
+        <table className="table min-w-[900px]">
           <thead className="text-black">
             <tr className="text-sm">
               <th className="grid grid-cols-2">
@@ -236,7 +237,7 @@ const ExpensePage = () => {
                   </div>
                 </td>
                 <td>
-                  <div className="flex flex-row justify-between items-center">
+                  <div className="flex flex-row justify-center gap-x-4 items-center">
                     <div>
                       <Link
                         href={{
@@ -250,13 +251,13 @@ const ExpensePage = () => {
                         }}
                       >
                         <button>
-                          <img className="w-6 h-6" src="/assets/edit.png" alt="Edit" />
+                          <Image width={30} height={30} src="/assets/edit.png" alt="Edit" />
                         </button>
                       </Link>
                     </div>
                     <div>
                       <button onClick={() => showDeleteConfirmation(item._id)}>
-                        <img className="w-6 h-6" src="/assets/trash.png" alt="Delete" />
+                        <Image width={30} height={30} src="/assets/trash.png" alt="Delete" />
                       </button>
                     </div>
 
