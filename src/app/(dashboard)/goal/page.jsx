@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import DeleteConfirmation from "@/components/DeleteConfirmation";
 import { goalServices } from "@/services/goal.services";
 import { convertNumberToCurrencyFormat } from "@/helpers/helper";
-
+import { useAlertStore } from "@/stores/alert.store";
 import { MdModeEdit, MdDeleteForever } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
 import Link from "next/link";
@@ -16,7 +16,9 @@ const GoalPage = () => {
   const router = useRouter();
 
   const [goalData, setGoalData] = useState([]);
-  const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
+  const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] =
+    useState(false);
+  const setAlert = useAlertStore((state) => state.setAlert);
 
   useEffect(() => {
     // Fetch goal data and update the state
@@ -45,6 +47,11 @@ const GoalPage = () => {
         if (res.success) {
           window.location.reload();
           hideDeleteConfirmation();
+          setAlert({
+            showAlert: true,
+            success: true,
+            message: "Goal deleted successfully",
+          });
         }
       } catch (error) {
         console.error(error);
@@ -68,7 +75,9 @@ const GoalPage = () => {
 
       <div>
         {goalData.map((goal) => {
-          const percentage = Math.round((goal.savingsAmount / goal.goalPrice) * 100);
+          const percentage = Math.round(
+            (goal.savingsAmount / goal.goalPrice) * 100
+          );
           const heightOfCompletion =
             percentage === 100 ? "h-full rounded-[10px]" : "rounded-b-[10px]";
           return (
@@ -77,11 +86,20 @@ const GoalPage = () => {
               className="bg-white mt-10 mb-10 rounded-xl mx-20 py-10 flex items-center justify-between"
             >
               <div key={goal._id} className="flex items-center ml-10 mr-10 ">
-                <Image src={goal.goalImage} alt="Goal" width={100} height={100} />
+                <Image
+                  src={goal.goalImage}
+                  alt="Goal"
+                  width={100}
+                  height={100}
+                />
                 <div className="ml-10 mt-0">
-                  <h1 className="font-bold text-[30px] text-black">{goal.goalName}</h1>
+                  <h1 className="font-bold text-[30px] text-black">
+                    {goal.goalName}
+                  </h1>
                   <p className="text-lg font-semibold">Description</p>
-                  <span className="text-[15px] text-black">{goal.goalDescription}</span>
+                  <span className="text-[15px] text-black">
+                    {goal.goalDescription}
+                  </span>
                   <p className="text-lg font-semibold">Store</p>
                   <Link href={goal.goalStore} className="text-black underline">
                     {goal.goalStore}
@@ -115,7 +133,10 @@ const GoalPage = () => {
                     <button className="bg-info rounded-full p-2">
                       <MdModeEdit size="1.45em" fill="white" />
                     </button>
-                    <button onClick={showDeleteConfirmation} className="bg-error rounded-full p-2">
+                    <button
+                      onClick={showDeleteConfirmation}
+                      className="bg-error rounded-full p-2"
+                    >
                       <MdDeleteForever size="1.45em" fill="white" />
                     </button>
                   </div>

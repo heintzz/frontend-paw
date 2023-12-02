@@ -6,6 +6,7 @@ import { goalServices } from "@/services/goal.services";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import ValidationMessage from "@/components/ValidationMessage";
+import { useAlertStore } from "@/stores/alert.store";
 
 const CreatePage = () => {
   const {
@@ -18,6 +19,8 @@ const CreatePage = () => {
   } = useForm();
   const router = useRouter();
   const [image, setImage] = useState();
+
+  const setAlert = useAlertStore((state) => state.setAlert);
 
   const uploadImage = (e) => {
     let reader = new FileReader();
@@ -56,6 +59,11 @@ const CreatePage = () => {
         if (res.success) {
           reset();
           router.push("/goal");
+          setAlert({
+            showAlert: true,
+            success: true,
+            message: "Goal created successfully",
+          });
         }
       } catch (error) {
         console.error(error);
@@ -86,7 +94,9 @@ const CreatePage = () => {
         <div className="p-4 min-w-[30%] max-w-[800px]">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
-              <label className="font-semibold text-[20px] text-black mb-2">Name of Goal</label>
+              <label className="font-semibold text-[20px] text-black mb-2">
+                Name of Goal
+              </label>
               <input
                 type="text"
                 className="input input-bordered focus:outline-black focus:border-none w-full mt-2"
@@ -94,10 +104,14 @@ const CreatePage = () => {
                   required: "Name cannot be empty",
                 })}
               />
-              {errors.name ? <ValidationMessage>{errors.name.message}</ValidationMessage> : null}
+              {errors.name ? (
+                <ValidationMessage>{errors.name.message}</ValidationMessage>
+              ) : null}
             </div>
             <div className="mb-4">
-              <label className="font-semibold text-[20px] text-black">Description</label>
+              <label className="font-semibold text-[20px] text-black">
+                Description
+              </label>
               <input
                 type="text"
                 className="input input-bordered focus:outline-black focus:border-none w-full mt-2"
@@ -105,10 +119,14 @@ const CreatePage = () => {
                   required: "Description cannot be empty",
                 })}
               />
-              {errors.desc ? <ValidationMessage>{errors.desc.message}</ValidationMessage> : null}
+              {errors.desc ? (
+                <ValidationMessage>{errors.desc.message}</ValidationMessage>
+              ) : null}
             </div>
             <div className="mb-4">
-              <label className="font-semibold text-[20px] text-black">Price</label>
+              <label className="font-semibold text-[20px] text-black">
+                Price
+              </label>
               <input
                 type="number"
                 className="input input-bordered focus:outline-black focus:border-none w-full mt-2"
@@ -116,10 +134,14 @@ const CreatePage = () => {
                   required: "Price cannot be empty",
                 })}
               />
-              {errors.price ? <ValidationMessage>{errors.price.message}</ValidationMessage> : null}
+              {errors.price ? (
+                <ValidationMessage>{errors.price.message}</ValidationMessage>
+              ) : null}
             </div>
             <div className="mb-4">
-              <label className="font-semibold text-[20px] text-black">Store</label>
+              <label className="font-semibold text-[20px] text-black">
+                Store
+              </label>
               <input
                 type="text"
                 className="input input-bordered focus:outline-black focus:border-none w-full mt-2"
@@ -129,10 +151,14 @@ const CreatePage = () => {
                   required: "Store cannot be empty",
                 })}
               />
-              {errors.store ? <ValidationMessage>{errors.store.message}</ValidationMessage> : null}
+              {errors.store ? (
+                <ValidationMessage>{errors.store.message}</ValidationMessage>
+              ) : null}
             </div>
             <div className="mb-4">
-              <label className="font-semibold text-[20px] text-black">Goal Image</label>
+              <label className="font-semibold text-[20px] text-black">
+                Goal Image
+              </label>
               <div className="flex items-center">
                 <input
                   type="file"
@@ -149,7 +175,9 @@ const CreatePage = () => {
                   Choose image
                 </label>
               </div>
-              {errors.image ? <ValidationMessage>{errors.image.message}</ValidationMessage> : null}
+              {errors.image ? (
+                <ValidationMessage>{errors.image.message}</ValidationMessage>
+              ) : null}
             </div>
             <div className="text-center">
               <button
