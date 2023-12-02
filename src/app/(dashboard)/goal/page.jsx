@@ -61,7 +61,7 @@ const GoalPage = () => {
   };
 
   return (
-    <div className="pt-4 pb-24">
+    <div className="pt-4 pb-24 lg:pb-24">
       <AlertResponse />
       <div className="bg-white min-w-screen py-4 flex items-center justify-between">
         <h1 className="font-bold text-[32px] text-black ml-8">Goal</h1>
@@ -85,16 +85,19 @@ const GoalPage = () => {
           return (
             <div
               key={goal._id}
-              className="bg-white mt-10 mb-10 rounded-xl mx-20 py-10 flex items-center justify-between"
+              className="bg-white mt-4 lg:mt-10 mb-4 lg:mb-10 rounded-xl mx-4 lg:mx-20 py-4 lg:py-10 flex flex-col lg:flex-row items-center justify-between"
             >
-              <div key={goal._id} className="flex items-center ml-10 mr-10 ">
+              <div
+                key={goal._id}
+                className="flex flex-col items-center lg:flex-row lg:items-start mx-4 lg:mx-10 my-2 lg:my-0"
+              >
                 <Image
                   src={goal.goalImage}
                   alt="Goal"
                   width={100}
                   height={100}
                 />
-                <div className="ml-10 mt-0">
+                <div className="ml-0 lg:ml-10 mt-4 lg:mt-0 text-center lg:text-left">
                   <h1 className="font-bold text-[30px] text-black">
                     {goal.goalName}
                   </h1>
