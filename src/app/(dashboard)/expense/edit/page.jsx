@@ -5,6 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import { expenseServices } from "@/services/expense.services";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import { useAlertStore } from "@/stores/alert.store";
 
 const EditPage = () => {
   const searchParams = useSearchParams();
@@ -16,6 +17,7 @@ const EditPage = () => {
   const { control, handleSubmit, reset } = useForm();
   const [isMonthly, setIsMonthly] = useState(expenseMonthly);
   const router = useRouter();
+  const setAlert = useAlertStore((state) => state.setAlert);
 
   const onSubmit = (data) => {
     (async () => {
@@ -31,6 +33,11 @@ const EditPage = () => {
         if (res.success) {
           reset();
           router.push("/expense");
+          setAlert({
+            showAlert: true,
+            success: true,
+            message: "Expense edited successfully",
+          });
         }
       } catch (error) {
         console.error(error);

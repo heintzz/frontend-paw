@@ -5,12 +5,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import AlertResponse from "@/components/AlertResponse";
 import useSorting from "@/app/hooks/useSorting";
 import DeleteConfirmation from "@/components/DeleteConfirmation";
 import { expenseCategories } from "@/enums/category.enum";
 import { formatDate } from "@/helpers/helper";
 import { expenseServices } from "@/services/expense.services";
 import { convertNumberToCurrencyFormat } from "@/helpers/helper";
+import { useAlertStore } from "@/stores/alert.store";
 
 const ExpensePage = () => {
   const router = useRouter();
@@ -23,6 +25,8 @@ const ExpensePage = () => {
   const [applyFilter, setApplyFilter] = useState(false);
   const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
   const [deleteId, setDeleteId] = useState(0);
+
+  const setAlert = useAlertStore((state) => state.setAlert);
 
   const [sortOrder, sortColumn, toggleSortOrder, sortData] = useSorting(
     expenseData,
@@ -41,6 +45,18 @@ const ExpensePage = () => {
         console.error("Error fetching expense data:", error);
       });
   }, []);
+
+  const updateExpenseData = () =>{
+    // Fetch expense data and update the state
+    expenseServices
+      .getExpenseData()
+      .then((data) => {
+        setExpenseData(data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching expense data:", error);
+      });
+  };
 
   const filterExpenseData = (item) => {
     if (!applyFilter) return true;
@@ -83,8 +99,13 @@ const ExpensePage = () => {
       try {
         const res = await expenseServices.deleteExpenseData(id);
         if (res.success) {
-          window.location.reload();
+          updateExpenseData();
           hideDeleteConfirmation();
+          setAlert({
+            showAlert: true,
+            success: true,
+            message: "Expense deleted successfully",
+          });
         }
       } catch (error) {
         console.error(error);
@@ -102,6 +123,7 @@ const ExpensePage = () => {
 
   return (
     <div className="pt-4 pb-24">
+      <AlertResponse/>
       <div className="bg-white min-w-screen py-4 flex items-center justify-between">
         <h1 className="font-bold text-[32px] text-black ml-8">Expense</h1>
         <div className="flex space-x-4 mr-4">

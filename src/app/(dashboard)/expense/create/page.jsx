@@ -4,11 +4,14 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { expenseServices } from "@/services/expense.services";
 import { useRouter } from "next/navigation";
+import { useAlertStore } from "@/stores/alert.store";
 
 const CreatePage = () => {
   const { control, handleSubmit, reset } = useForm();
   const [isMonthly, setIsMonthly] = useState(false);
   const router = useRouter();
+
+  const setAlert = useAlertStore((state) => state.setAlert);
 
   const categories = [
     "Education",
@@ -34,6 +37,11 @@ const CreatePage = () => {
         if (res.success) {
           reset();
           router.push("/expense");
+          setAlert({
+            showAlert: true,
+            success: true,
+            message: "Expense created successfully",
+          });
         }
       } catch (error) {
         console.error(error);
