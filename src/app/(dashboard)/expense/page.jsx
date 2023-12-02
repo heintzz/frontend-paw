@@ -36,17 +36,10 @@ const ExpensePage = () => {
 
   useEffect(() => {
     // Fetch expense data and update the state
-    expenseServices
-      .getExpenseData()
-      .then((data) => {
-        setExpenseData(data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching expense data:", error);
-      });
+    fetchExpenseData();
   }, []);
 
-  const updateExpenseData = () =>{
+  const fetchExpenseData = () =>{
     // Fetch expense data and update the state
     expenseServices
       .getExpenseData()
@@ -99,7 +92,7 @@ const ExpensePage = () => {
       try {
         const res = await expenseServices.deleteExpenseData(id);
         if (res.success) {
-          updateExpenseData();
+          fetchExpenseData();
           hideDeleteConfirmation();
           setAlert({
             showAlert: true,

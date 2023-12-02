@@ -34,17 +34,10 @@ const IncomePage = () => {
 
   useEffect(() => {
     // Fetch income data and update the state
-    incomeServices
-      .getIncomeData()
-      .then((data) => {
-        setIncomeData(data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching income data:", error);
-      });
+    fetchIncomeData();
   }, []);
 
-  const updateIncomeData = () =>{
+  const fetchIncomeData = () =>{
     // Fetch income data and update the state
     incomeServices
       .getIncomeData()
@@ -97,7 +90,7 @@ const IncomePage = () => {
       try {
         const res = await incomeServices.deleteIncomeData(id);
         if (res.success) {
-          updateIncomeData();
+          fetchIncomeData();
           hideDeleteConfirmation();
           setAlert({
             showAlert: true,
