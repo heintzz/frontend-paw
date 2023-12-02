@@ -23,7 +23,7 @@ const DeleteConfirmation = ({ isOpen, hideDeleteConfirmation, handleDelete }) =>
             Cancel
           </button>
           <button
-            className="rounded-full text-white px-8 py-2 bg-main hover:bg-main-hover active:bg-main-active"
+            className="rounded-full text-white px-8 py-2 bg-red-500 hover:bg-red-600 active:bg-main-active"
             onClick={handleDelete}
           >
             Delete

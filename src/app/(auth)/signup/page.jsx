@@ -10,6 +10,8 @@ import { authServices } from "@/services/auth.services";
 import { tokenServices } from "@/services/token.service";
 import { useAlertStore } from "@/stores/alert.store";
 
+import ValidationMessage from "@/components/ValidationMessage";
+
 const SignupPage = () => {
   const router = useRouter();
   const setAlert = useAlertStore((state) => state.setAlert);
@@ -132,10 +134,6 @@ const SignupPage = () => {
       </div>
     </>
   );
-};
-
-const ValidationMessage = ({ children }) => {
-  return <p className="text-error text-xs mt-2 ml-[1px]">{children}</p>;
 };
 
 export default SignupPage;

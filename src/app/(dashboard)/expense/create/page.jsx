@@ -46,7 +46,7 @@ const CreatePage = () => {
   };
 
   return (
-    <div className="pt-8 pb-24">
+    <div className="pt-4 pb-24">
       <div className="bg-white py-4 flex items-center">
         <button className="ml-8" onClick={() => router.push("/expense")}>
           <img className="w-6 h-10" src="/assets/back button.png" />

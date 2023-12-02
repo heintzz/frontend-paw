@@ -9,6 +9,7 @@ import AlertResponse from "@/components/AlertResponse";
 import { authServices } from "@/services/auth.services";
 import { tokenServices } from "@/services/token.service";
 import { useAlertStore } from "@/stores/alert.store";
+import ValidationMessage from "@/components/ValidationMessage";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -27,7 +28,7 @@ const LoginPage = () => {
       router.push("/");
       return;
     }
-  }, [isLogin]);
+  }, [isLogin, router]);
 
   const onSubmit = (data) => {
     (async () => {
@@ -109,10 +110,6 @@ const LoginPage = () => {
       </div>
     </>
   );
-};
-
-const ValidationMessage = ({ children }) => {
-  return <p className="text-error text-xs mt-2 ml-[1px]">{children}</p>;
 };
 
 export default LoginPage;
