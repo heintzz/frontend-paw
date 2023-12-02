@@ -5,12 +5,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import AlertResponse from "@/components/AlertResponse";
 import useSorting from "@/app/hooks/useSorting";
 import DeleteConfirmation from "@/components/DeleteConfirmation";
 import { incomeCategories } from "@/enums/category.enum";
 import { formatDate } from "@/helpers/helper";
 import { incomeServices } from "@/services/income.services";
 import { convertNumberToCurrencyFormat } from "@/helpers/helper";
+import { useAlertStore } from "@/stores/alert.store";
 
 const IncomePage = () => {
   const router = useRouter();
@@ -23,6 +25,8 @@ const IncomePage = () => {
   const [applyFilter, setApplyFilter] = useState(false);
   const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
   const [deleteId, setDeleteId] = useState(0);
+
+  const setAlert = useAlertStore((state) => state.setAlert);
 
   const [sortOrder, sortColumn, toggleSortOrder, sortData] = useSorting(incomeData);
 
@@ -39,6 +43,18 @@ const IncomePage = () => {
         console.error("Error fetching income data:", error);
       });
   }, []);
+
+  const updateIncomeData = () =>{
+    // Fetch income data and update the state
+    incomeServices
+      .getIncomeData()
+      .then((data) => {
+        setIncomeData(data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching income data:", error);
+      });
+  };
 
   const filterIncomeData = (item) => {
     if (!applyFilter) return true;
@@ -81,8 +97,13 @@ const IncomePage = () => {
       try {
         const res = await incomeServices.deleteIncomeData(id);
         if (res.success) {
-          window.location.reload();
+          updateIncomeData();
           hideDeleteConfirmation();
+          setAlert({
+            showAlert: true,
+            success: true,
+            message: "Income deleted successfully",
+          });
         }
       } catch (error) {
         console.error(error);
@@ -100,6 +121,7 @@ const IncomePage = () => {
 
   return (
     <div className="pt-4 pb-24">
+      <AlertResponse/>
       <div className="bg-white min-w-screen py-4 flex items-center justify-between">
         <h1 className="font-bold text-[32px] text-black ml-8">Income</h1>
         <div className="flex space-x-4 mr-4">

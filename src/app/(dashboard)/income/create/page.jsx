@@ -4,12 +4,14 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { incomeServices } from "@/services/income.services";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import { useAlertStore } from "@/stores/alert.store";
 
 const CreatePage = () => {
   const { control, handleSubmit, reset } = useForm();
   const [isMonthly, setIsMonthly] = useState(false);
   const router = useRouter();
+
+  const setAlert = useAlertStore((state) => state.setAlert);
 
   const onSubmit = (data) => {
     (async () => {
@@ -24,6 +26,11 @@ const CreatePage = () => {
         if (res.success) {
           reset();
           router.push("/income");
+          setAlert({
+            showAlert: true,
+            success: true,
+            message: "Income created successfully",
+          });
         }
       } catch (error) {
         console.error(error);
