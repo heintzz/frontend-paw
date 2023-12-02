@@ -1,10 +1,10 @@
 import { tokenServices } from "./token.service";
 import axios from "axios";
 
-const accessToken = tokenServices.getAccessToken();
 const BASE_URL = process.env.API_BASE_URL;
 
 const getSummary = async () => {
+  const accessToken = tokenServices.getAccessToken();
   return new Promise((resolve, reject) => {
     axios
       .get(`${BASE_URL}/summary`, {
@@ -22,6 +22,7 @@ const getSummary = async () => {
 };
 
 const getTrackerHistory = async (options) => {
+  const accessToken = tokenServices.getAccessToken();
   return new Promise((resolve, reject) => {
     axios
       .get(`${BASE_URL}/tracker`, {

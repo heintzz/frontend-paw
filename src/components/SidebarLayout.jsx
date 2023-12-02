@@ -4,13 +4,14 @@ import { tokenServices } from "@/services/token.service";
 import { useSidebarStore } from "@/stores/sidebar.store";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useShallow } from "zustand/react/shallow";
 
 import { sidebarItems, sidebarItemsOnSmallScreen } from "@/enums/sidebar.enum";
 
 import FintrackLogo from "public/assets/fintrackLogo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
+
 import "@/styles/SidebarLayout.css";
 
 export default function SidebarLayout() {
@@ -63,8 +64,9 @@ const SmallScreenSidebar = ({ activeMenu }) => {
 };
 
 const MediumScreenSidebar = ({ showSidebar, setShowSidebar, activeMenu }) => {
+  const router = useRouter();
   return (
-    <div className={`sidebar ${showSidebar ? "" : "close"} hidden md:flex`}>
+    <div className={`sidebar ${showSidebar ? "" : "close"} hidden md:flex `}>
       <div className={`header ${showSidebar ? "" : "close"}`}>
         {showSidebar && (
           <>
@@ -97,18 +99,22 @@ const MediumScreenSidebar = ({ showSidebar, setShowSidebar, activeMenu }) => {
         })}
       </div>
       <div className="footer">
-        <Link href="/login" onClick={tokenServices.removeAccessToken}>
-          <div className="item">
-            <Image
-              className="icon-chat"
-              src="/assets/logoutIcon.png"
-              alt="Menu Icon"
-              width={22}
-              height={22}
-            />
-            {showSidebar && <div className="text-base ">Logout</div>}
-          </div>
-        </Link>
+        <div
+          className="item"
+          onClick={() => {
+            tokenServices.removeAccessToken();
+            router.push("/dashboard");
+          }}
+        >
+          <Image
+            className="icon-chat"
+            src="/assets/logoutIcon.png"
+            alt="Menu Icon"
+            width={22}
+            height={22}
+          />
+          {showSidebar && <div className="text-base ">Logout</div>}
+        </div>
       </div>
     </div>
   );

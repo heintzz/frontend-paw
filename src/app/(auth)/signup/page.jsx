@@ -1,21 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import AlertResponse from "@/components/AlertResponse";
 import { authServices } from "@/services/auth.services";
-import { tokenServices } from "@/services/token.service";
 import { useAlertStore } from "@/stores/alert.store";
 
 import ValidationMessage from "@/components/ValidationMessage";
+import { useRouter } from "next/navigation";
 
 const SignupPage = () => {
   const router = useRouter();
   const setAlert = useAlertStore((state) => state.setAlert);
-  const isLogin = tokenServices.getUserLoginStatus();
 
   const {
     register,
@@ -23,13 +20,6 @@ const SignupPage = () => {
     reset,
     formState: { errors },
   } = useForm();
-
-  useEffect(() => {
-    if (isLogin) {
-      router.push("/");
-      return;
-    }
-  }, [isLogin]);
 
   const onSubmit = (data) => {
     (async () => {
@@ -43,6 +33,7 @@ const SignupPage = () => {
           });
           reset();
         }
+        router.push("/login");
       } catch (error) {
         console.error(error);
         setAlert({

@@ -37,7 +37,7 @@ const IncomePage = () => {
     fetchIncomeData();
   }, []);
 
-  const fetchIncomeData = () =>{
+  const fetchIncomeData = () => {
     // Fetch income data and update the state
     incomeServices
       .getIncomeData()
@@ -114,18 +114,18 @@ const IncomePage = () => {
 
   return (
     <div className="pt-4 pb-24">
-      <AlertResponse/>
+      <AlertResponse />
       <div className="bg-white min-w-screen py-4 flex items-center justify-between">
         <h1 className="font-bold text-[32px] text-black ml-8">Income</h1>
         <div className="flex space-x-4 mr-4">
           <button
-            className="rounded-full text-white px-8 py-2 bg-main hover:bg-main-hover active:bg-main-active"
+            className="rounded-3xl text-white px-8 py-2 bg-main hover:bg-main-hover active:bg-main-active"
             onClick={() => setShowFilter(!showFilter)}
           >
             Filter
           </button>
           <button
-            className="rounded-full text-white text-[32px] font-thin px-4 text-center bg-main hover:bg-main-hover active:bg-main-active"
+            className="rounded-3xl text-white text-[32px] font-thin px-4 text-center bg-main hover:bg-main-hover active:bg-main-active"
             onClick={() => router.push("/income/create")}
           >
             +
@@ -136,7 +136,7 @@ const IncomePage = () => {
       {showFilter && (
         <div className="bg-white mt-6 rounded-xl mx-8 py-8">
           {/* Filter menu content */}
-          <div className="grid grid-cols-3 gap-4 mx-10">
+          <div className="flex flex-col gap-y-2 md:grid md:grid-cols-3 gap-4 mx-10">
             <div>
               <div>
                 <label className="font-semibold text-[20px] text-black">Category</label>
@@ -187,10 +187,10 @@ const IncomePage = () => {
               </div>
             </div>
 
-            <div className="flex justify-end gap-x-2 mt-auto">
+            <div className="flex justify-end gap-x-2 mt-10 md:mt-auto">
               {/* Apply button */}
               <button
-                className="w-150 rounded-full text-white px-4 py-2 bg-main hover-bg-main-hover active-bg-main-active"
+                className="rounded-3xl md:min-w-[70px] lg:min-w-[100px] text-white px-4 py-2 bg-main hover-bg-main-hover active-bg-main-active"
                 onClick={() => {
                   setApplyFilter(true);
                   setShowFilter(false);
@@ -199,10 +199,10 @@ const IncomePage = () => {
                 Apply
               </button>
               <button
-                className="w-150 rounded-full text-main px-4 py-2 outline -main hover-bg-main-hover active-bg-main-active"
+                className="rounded-3xl md:min-w-[70px] lg:min-w-[100px] text-main px-4 py-2 outline outline-1 outline-main"
                 onClick={resetFilterForm}
               >
-                Reset Filter
+                Reset
               </button>
             </div>
           </div>
@@ -240,7 +240,7 @@ const IncomePage = () => {
                 <td>Rp{convertNumberToCurrencyFormat(item.incomeAmount)}</td>
                 <td>
                   <div
-                    className={`rounded-full ${
+                    className={`rounded-3xl ${
                       item.autoAdd ? "bg-info" : "bg-main"
                     } text-white w-fit px-4 py-2 font-semibold`}
                   >

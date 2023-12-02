@@ -1,20 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import AlertResponse from "@/components/AlertResponse";
+import ValidationMessage from "@/components/ValidationMessage";
 import { authServices } from "@/services/auth.services";
 import { tokenServices } from "@/services/token.service";
 import { useAlertStore } from "@/stores/alert.store";
-import ValidationMessage from "@/components/ValidationMessage";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const router = useRouter();
   const setAlert = useAlertStore((state) => state.setAlert);
-  const isLogin = tokenServices.getUserLoginStatus();
 
   const {
     register,
@@ -23,13 +21,6 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm();
 
-  useEffect(() => {
-    if (isLogin) {
-      router.push("/");
-      return;
-    }
-  }, [isLogin, router]);
-
   const onSubmit = (data) => {
     (async () => {
       try {
@@ -37,7 +28,7 @@ const LoginPage = () => {
         if (res.success) {
           reset();
           tokenServices.setAccessToken(res.data.accessToken);
-          router.push("/");
+          router.push("/dashboard");
         }
       } catch (error) {
         console.error(error);
