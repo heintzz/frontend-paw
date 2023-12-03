@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import AlertResponse from "@/components/AlertResponse";
 import DeleteConfirmation from "@/components/DeleteConfirmation";
 import { goalServices } from "@/services/goal.services";
 import { convertNumberToCurrencyFormat } from "@/helpers/helper";
@@ -59,7 +60,8 @@ const GoalPage = () => {
   };
 
   return (
-    <div className="pt-4 pb-24">
+    <div className="pt-4 pb-8 lg:pb-24">
+      <AlertResponse />
       <div className="bg-white min-w-screen py-4 flex items-center justify-between">
         <h1 className="font-bold text-[32px] text-black ml-8">Goal</h1>
         <div className="flex space-x-4 mr-20">
@@ -82,16 +84,20 @@ const GoalPage = () => {
           return (
             <div
               key={goal._id}
-              className="bg-white mt-10 mb-10 rounded-xl mx-20 py-10 flex items-center justify-between"
+              className="bg-white mt-4 lg:mt-10 mb-4 lg:mb-10 rounded-xl mx-2 sm:mx-4 lg:mx-8 py-4 lg:py-8 flex flex-col sm:flex-row items-center justify-between"
             >
-              <div key={goal._id} className="flex items-center ml-10 mr-10 ">
+              <div
+                key={goal._id}
+                className="flex flex-col items-center sm:flex-row sm:items-start mx-2 sm:mx-4 lg:mx-10 my-2 lg:my-0"
+              >
                 <Image
                   src={goal.goalImage}
                   alt="Goal"
                   width={100}
                   height={100}
+                  className="rounded-full sm:mr-4 lg:mr-8 mb-4 sm:mb-0"
                 />
-                <div className="ml-10 mt-0">
+                <div className="ml-0 sm:ml-4 mt-4 sm:mt-0 text-center sm:text-left">
                   <h1 className="font-bold text-[30px] text-black">
                     {goal.goalName}
                   </h1>
