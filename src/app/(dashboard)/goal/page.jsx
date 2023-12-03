@@ -16,8 +16,7 @@ const GoalPage = () => {
   const router = useRouter();
 
   const [goalData, setGoalData] = useState([]);
-  const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] =
-    useState(false);
+  const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] =useState(false);
   const setAlert = useAlertStore((state) => state.setAlert);
 
   useEffect(() => {
@@ -123,16 +122,32 @@ const GoalPage = () => {
                     <div
                       className={`bg-green-200 absolute ${heightOfCompletion} w-full bottom-0`}
                       style={{ height: `${percentage}%` }}
-                    ></div>
+                    >                      
+                    </div>
                     <span className="text-black">{percentage}%</span>
                   </div>
                   <div className="flex flex-col justify-between ml-4">
                     <button className="bg-main rounded-full p-2">
                       <FaPlus size="1.45em" fill="white" />
                     </button>
-                    <button className="bg-info rounded-full p-2">
-                      <MdModeEdit size="1.45em" fill="white" />
-                    </button>
+                    <div>
+                      <Link
+                        href={{
+                          pathname: "/goal/edit",
+                          query: {
+                            id: goal._id,
+                            name: goal.goalName,
+                            desc: goal.goalDescription,
+                            store: goal.goalStore,
+                            price: goal.goalPrice,
+                          },
+                        }}
+                      >
+                        <button className="bg-info rounded-full p-2">
+                          <MdModeEdit size="1.45em" fill="white" />
+                        </button>
+                      </Link>
+                    </div>                    
                     <button
                       onClick={showDeleteConfirmation}
                       className="bg-error rounded-full p-2"

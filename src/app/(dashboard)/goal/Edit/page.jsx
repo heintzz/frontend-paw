@@ -5,17 +5,18 @@ import { useForm, Controller } from "react-hook-form";
 import { goalServices } from "@/services/goal.services";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import { useAlertStore } from "@/stores/alert.store";
 
 const EditPage = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const goalPrice = searchParams.get("price");
-  const goalAddAmountSaving = searchParams.get("addamountsaving");
   const goalName = searchParams.get("name");
   const goalDescription = searchParams.get("desc");
-  const goalAmount = searchParams.get("amount");
   const goalStore= searchParams.get("store");
   const goalImage = searchParams.get ("image");
+  const setAlert = useAlertStore((state) => state.setAlert);
+
 
   const { control, handleSubmit, reset } = useForm();
   const router = useRouter();
@@ -32,14 +33,19 @@ const EditPage = () => {
         goalImage:image
       };
       try {
-        const res = await goalServices.editGoalData(patchData, id);
+        const res = await goalServices.editGoaleData(patchData, id);
         if (res.success) {
           reset();
           router.push("/goal");
+          setAlert({
+            showAlert: true,
+            success: true,
+            message: "goal edited successfully",
+          });
         }
       } catch (error) {
         console.error(error);
-      };
+      }
     })();
   };
 
