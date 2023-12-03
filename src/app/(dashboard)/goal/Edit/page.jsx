@@ -30,10 +30,9 @@ const EditPage = () => {
         goalDescription: data.desc,
         goalAmount: data.amount,
         goalStore: data.store,
-        goalImage:image
       };
       try {
-        const res = await goalServices.editGoaleData(patchData, id);
+        const res = await goalServices.editGoalData(patchData, id);
         if (res.success) {
           reset();
           router.push("/goal");
