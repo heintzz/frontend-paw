@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import ValidationMessage from "@/components/ValidationMessage";
 import { useAlertStore } from "@/stores/alert.store";
+import { MdOutlineArrowBackIosNew } from "react-icons/md";
 
 const CreatePage = () => {
   const {
@@ -75,7 +76,7 @@ const CreatePage = () => {
     <div className="pt-4">
       <div className="bg-white py-4 flex items-center">
         <button className="ml-8" onClick={() => router.push("/goal")}>
-          <img className="w-6 h-10" src="/assets/back button.png" />
+        <MdOutlineArrowBackIosNew   size="1.90em" fill="Black"/>
         </button>
         <h1 className="font-bold text-[32px] text-black ml-8">Create Goal</h1>
       </div>

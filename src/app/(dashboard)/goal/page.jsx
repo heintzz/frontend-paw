@@ -15,7 +15,6 @@ import Link from "next/link";
 
 const GoalPage = () => {
   const router = useRouter();
-
   const [goalData, setGoalData] = useState([]);
   const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] =useState(false);
   const setAlert = useAlertStore((state) => state.setAlert);
@@ -133,9 +132,11 @@ const GoalPage = () => {
                     <span className="text-black">{percentage}%</span>
                   </div>
                   <div className="flex flex-col justify-between ml-4">
-                    <button className="bg-main rounded-full p-2">
-                      <FaPlus size="1.45em" fill="white" />
-                    </button>
+                    <div>
+                        <button className="bg-main rounded-full p-2" onClick={() => router.push("/goal")}>
+                          <FaPlus size="1.45em" fill="white" />
+                        </button>
+                    </div>
                       <Link
                         href={{
                           pathname: "/goal/Edit",
