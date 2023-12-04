@@ -4,8 +4,14 @@ export const convertNumberToCurrencyFormat = (number) => {
   const stringNumber = String(number);
   const arrayOfStringNumber = stringNumber.split("");
   const reverseStringNumber = arrayOfStringNumber.reverse();
+  const isNegative = stringNumber.startsWith("-");
+  const underThousand = reverseStringNumber.length < 3;
 
-  if (reverseStringNumber.length < 3) {
+  if (isNegative) {
+    arrayOfStringNumber.shift();
+  }
+
+  if (underThousand) {
     return reverseStringNumber;
   }
 
