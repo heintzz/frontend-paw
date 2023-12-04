@@ -66,11 +66,11 @@ const GoalPage = () => {
   };
 
   const [showModal, setShowModal] = useState(false);
-  const savingsAmount = searchParams.get("savingsAmount");
+  const savingsAmount = searchParams.get("amount");
   const onSubmit = (data) => {
     (async () => {
       const patchData = {
-        savingsAmount: data.savingsAmount,
+        savingsAmount: data.amount,
       };
       try {
         const res = await goalServices.editGoalData(patchData, id);
@@ -182,7 +182,7 @@ const GoalPage = () => {
                             </h3>
                             <div className="mb-4">
                               <Controller
-                                name="savingsAmount"
+                                name="amount"
                                 control={control}
                                 defaultValue={savingsAmount}
                                 render={({ field }) => (
