@@ -37,6 +37,13 @@ export default function Dashboard() {
   const [isTrackingMonth, setIsTrackingMonth] = useState(interval === "month");
   const [detailInterval, setDetailInterval] = useState(isTrackingMonth ? thisMonth : thisYear);
 
+  const isTrackerDataExist = tracker?.length > 0;
+  const containerHeight = loadingTracker
+    ? "min-h-[200px] md:min-h-[446px]"
+    : isTrackerDataExist
+    ? "h-fit"
+    : "min-h-[200px] md:min-h-[446px]";
+
   const cardData = useMemo(() => {
     const totalBalance = summary?.totalIncome - summary?.totalExpense || 0;
     const totalIncome = summary?.totalIncome || 0;
@@ -142,13 +149,11 @@ export default function Dashboard() {
         </div>
 
         <div
-          className={`flex flex-col gap-y-5 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-3  ${
-            loadingTracker ? "md:min-h-[446px]" : "h-fit"
-          }`}
+          className={`flex flex-col gap-y-5 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-3 ${containerHeight}`}
         >
           {/* Graph */}
           {loadingTracker ? (
-            <div className="row-span-1 min-h-[200px] md:col-span-1 lg:col-span-2 grid place-items-center bg-white shadow-xl rounded-xl p-5">
+            <div className="row-span-1 md:col-span-1 lg:col-span-2 grid place-items-center bg-white shadow-xl rounded-xl p-5">
               <span className="loading loading-dots loading-lg"></span>
             </div>
           ) : (
@@ -165,11 +170,7 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              {tracker?.length === 0 ? (
-                <p className="h-full grid place-items-center text-center my-5 md:my-0">
-                  Tidak terdapat data pada interval waktu tersebut ☹️
-                </p>
-              ) : (
+              {isTrackerDataExist ? (
                 <div className="max-w-full overflow-x-auto">
                   <div className="flex justify-end gap-x-4 my-5 text-sm">
                     <div className="flex items-center gap-x-2 ">
@@ -189,6 +190,10 @@ export default function Dashboard() {
                     )}
                   </div>
                 </div>
+              ) : (
+                <p className="h-full grid place-items-center text-center my-5 md:my-0">
+                  Tidak terdapat data pada interval waktu tersebut ☹️
+                </p>
               )}
             </div>
           )}
