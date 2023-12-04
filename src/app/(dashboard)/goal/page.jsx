@@ -24,6 +24,7 @@ const GoalPage = () => {
     useState(false);
   const setAlert = useAlertStore((state) => state.setAlert);
   const searchParams = useSearchParams();
+  const id = searchParams.get("id");
 
   useEffect(() => {
     // Fetch goal data and update the state
@@ -68,11 +69,11 @@ const GoalPage = () => {
   const goalAddAmountSaving = searchParams.get("savingsAmount");
   const onSubmit = (data) => {
     (async () => {
+      const patchData = {
+        savingsAmount: data.savingsAmount,
+      };
       try {
-        const res = await goalServices.editGoalData({
-          id: data._id,
-          savingsAmount: data.savingsAmount,
-        });
+        const res = await goalServices.editGoalData(patchData, id);
         if (res.success) {
           reset();
           router.push("/goal");
