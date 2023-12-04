@@ -10,8 +10,8 @@ import { convertNumberToCurrencyFormat } from "@/helpers/helper";
 import { useAlertStore } from "@/stores/alert.store";
 import { MdModeEdit, MdDeleteForever } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
-import { Fragment } from 'react';
-import Modal from "@/components/Modal"
+import { Fragment } from "react";
+import Modal from "@/components/Modal";
 import AlertResponse from "@/components/AlertResponse";
 import DeleteConfirmation from "@/components/DeleteConfirmation";
 import Link from "next/link";
@@ -20,7 +20,8 @@ const GoalPage = () => {
   const { control, handleSubmit, reset } = useForm();
   const router = useRouter();
   const [goalData, setGoalData] = useState([]);
-  const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] =useState(false);
+  const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] =
+    useState(false);
   const setAlert = useAlertStore((state) => state.setAlert);
   const searchParams = useSearchParams();
 
@@ -62,14 +63,14 @@ const GoalPage = () => {
       }
     })();
   };
-  
+
   const [showModal, setShowModal] = useState(false);
-  const goalAddAmountSaving = searchParams.get("savingsAmount")
+  const goalAddAmountSaving = searchParams.get("savingsAmount");
   const onSubmit = (data) => {
     (async () => {
       try {
         const res = await goalServices.editGoalData({
-          id: goal._id,
+          id: data._id,
           savingsAmount: data.savingsAmount,
         });
         if (res.success) {
@@ -155,62 +156,71 @@ const GoalPage = () => {
                     <div
                       className={`bg-green-200 absolute ${heightOfCompletion} w-full bottom-0`}
                       style={{ height: `${percentage}%` }}
-                    >                      
-                    </div>
+                    ></div>
                     <span className="text-black">{percentage}%</span>
                   </div>
                   <div className="flex flex-col justify-between ml-4">
                     <div>
-                      <Fragment>                        
-                        <button className="bg-main rounded-full p-2" onClick={() => setShowModal(true)}>
+                      <Fragment>
+                        <button
+                          className="bg-main rounded-full p-2"
+                          onClick={() => setShowModal(true)}
+                        >
                           <FaPlus size="1.45em" fill="white" />
                         </button>
-                        <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                          <h3 className="text-xl font-semibold text-black-900 mb-5" style={{textAlign: 'center'}}>Add Saving Amount</h3>
-                          <div className="mb-4">
-                        
-                            <Controller
-                              name="savingsAmount"
-                              control={control}
-                              defaultValue={goalAddAmountSaving}
-                              render={({ field }) => (
-                                <input
-                                  {...field}
-                                  type="number"
-                                  className="w-full py-2 px-2 rounded-md bg-white outline outline-1 mt-2"
-                                />
-                              )}
-                            />  
-                          </div>
-                          <div className="text-center">
-                            <button
-                              type="submit"
-                              className="rounded-full text-white px-4 py-2 bg-main hover:bg-main-hover active:bg-main-active"
+                        <Modal
+                          isVisible={showModal}
+                          onClose={() => setShowModal(false)}
+                        >
+                          <form onSubmit={handleSubmit(onSubmit)}>
+                            <h3
+                              className="text-xl font-semibold text-black-900 mb-5"
+                              style={{ textAlign: "center" }}
                             >
-                              Add
-                            </button>
-                        </div>
-                      </form>
+                              Add Saving Amount
+                            </h3>
+                            <div className="mb-4">
+                              <Controller
+                                name="savingsAmount"
+                                control={control}
+                                defaultValue={goalAddAmountSaving}
+                                render={({ field }) => (
+                                  <input
+                                    {...field}
+                                    type="number"
+                                    className="w-full py-2 px-2 rounded-md bg-white outline outline-1 mt-2"
+                                  />
+                                )}
+                              />
+                            </div>
+                            <div className="text-center">
+                              <button
+                                type="submit"
+                                className="rounded-full text-white px-4 py-2 bg-main hover:bg-main-hover active:bg-main-active"
+                              >
+                                Add
+                              </button>
+                            </div>
+                          </form>
                         </Modal>
                       </Fragment>
                     </div>
                     <Link
                       href={{
-                          pathname: "/goal/Edit",
-                          query: {
-                            id: goal._id,
-                            name: goal.goalName,
-                            desc: goal.goalDescription,
-                            store: goal.goalStore,
-                            price: goal.goalPrice,
-                          },
+                        pathname: "/goal/Edit",
+                        query: {
+                          id: goal._id,
+                          name: goal.goalName,
+                          desc: goal.goalDescription,
+                          store: goal.goalStore,
+                          price: goal.goalPrice,
+                        },
                       }}
-                      >
-                        <button className="bg-info rounded-full p-2">
-                          <MdModeEdit size="1.45em" fill="white" />
-                        </button>
-                      </Link>                 
+                    >
+                      <button className="bg-info rounded-full p-2">
+                        <MdModeEdit size="1.45em" fill="white" />
+                      </button>
+                    </Link>
                     <button
                       onClick={showDeleteConfirmation}
                       className="bg-error rounded-full p-2"
