@@ -2,22 +2,27 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-
-import AlertResponse from "@/components/AlertResponse";
-import DeleteConfirmation from "@/components/DeleteConfirmation";
+import { useEffect, useState, useRef } from "react";
+import { useSearchParams } from "next/navigation";
+import { useForm, Controller } from "react-hook-form";
 import { goalServices } from "@/services/goal.services";
 import { convertNumberToCurrencyFormat } from "@/helpers/helper";
 import { useAlertStore } from "@/stores/alert.store";
 import { MdModeEdit, MdDeleteForever } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
+import { Fragment } from 'react';
+import Modal from "@/components/Modal"
+import AlertResponse from "@/components/AlertResponse";
+import DeleteConfirmation from "@/components/DeleteConfirmation";
 import Link from "next/link";
 
 const GoalPage = () => {
+  const { control, handleSubmit, reset } = useForm();
   const router = useRouter();
   const [goalData, setGoalData] = useState([]);
   const [isDeleteConfirmationVisible, setDeleteConfirmationVisible] =useState(false);
   const setAlert = useAlertStore((state) => state.setAlert);
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     // Fetch goal data and update the state
@@ -57,6 +62,30 @@ const GoalPage = () => {
       }
     })();
   };
+  
+  const [showModal, setShowModal] = useState(false);
+  const goalAddAmountSaving = searchParams.get("savingsAmount")
+  const onSubmit = (data) => {
+    (async () => {
+      try {
+        const res = await goalServices.editGoalData({
+          id: goal._id,
+          savingsAmount: data.savingsAmount,
+        });
+        if (res.success) {
+          reset();
+          router.push("/goal");
+          setAlert({
+            showAlert: true,
+            success: true,
+            message: "add saving amount successfully",
+          });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  };
 
   return (
     <div className="pt-4 pb-8 lg:pb-24">
@@ -72,7 +101,6 @@ const GoalPage = () => {
           </button>
         </div>
       </div>
-
       <div>
         {goalData.map((goal) => {
           const percentage = Math.round(
@@ -133,12 +161,42 @@ const GoalPage = () => {
                   </div>
                   <div className="flex flex-col justify-between ml-4">
                     <div>
-                        <button className="bg-main rounded-full p-2" onClick={() => router.push("/goal")}>
+                      <Fragment>                        
+                        <button className="bg-main rounded-full p-2" onClick={() => setShowModal(true)}>
                           <FaPlus size="1.45em" fill="white" />
                         </button>
+                        <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                          <h3 className="text-xl font-semibold text-black-900 mb-5" style={{textAlign: 'center'}}>Add Saving Amount</h3>
+                          <div className="mb-4">
+                        
+                            <Controller
+                              name="savingsAmount"
+                              control={control}
+                              defaultValue={goalAddAmountSaving}
+                              render={({ field }) => (
+                                <input
+                                  {...field}
+                                  type="number"
+                                  className="w-full py-2 px-2 rounded-md bg-white outline outline-1 mt-2"
+                                />
+                              )}
+                            />  
+                          </div>
+                          <div className="text-center">
+                            <button
+                              type="submit"
+                              className="rounded-full text-white px-4 py-2 bg-main hover:bg-main-hover active:bg-main-active"
+                            >
+                              Add
+                            </button>
+                        </div>
+                      </form>
+                        </Modal>
+                      </Fragment>
                     </div>
-                      <Link
-                        href={{
+                    <Link
+                      href={{
                           pathname: "/goal/Edit",
                           query: {
                             id: goal._id,
@@ -147,7 +205,7 @@ const GoalPage = () => {
                             store: goal.goalStore,
                             price: goal.goalPrice,
                           },
-                        }}
+                      }}
                       >
                         <button className="bg-info rounded-full p-2">
                           <MdModeEdit size="1.45em" fill="white" />

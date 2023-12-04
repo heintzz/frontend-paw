@@ -15,7 +15,7 @@ const EditPage = () => {
   const goalName = searchParams.get("name");
   const goalDescription = searchParams.get("desc");
   const goalStore= searchParams.get("store");
-  const goalImage = searchParams.get ("image");
+  //const goalImage = searchParams.get ("image");
   const setAlert = useAlertStore((state) => state.setAlert);
 
 
