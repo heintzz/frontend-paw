@@ -28,9 +28,9 @@ const GoalPage = () => {
   const setAlert = useAlertStore((state) => state.setAlert);
   const [showModal, setShowModal] = useState(false);
   const [editId, setEditId] = useState("");
+  const [triggerRefetch, setTriggerRefetch] = useState(false);
 
   useEffect(() => {
-    // Fetch goal data and update the state
     goalServices
       .getGoalData()
       .then((res) => {
@@ -39,7 +39,7 @@ const GoalPage = () => {
       .catch((error) => {
         console.error("Error fetching goal data:", error);
       });
-  }, []);
+  }, [triggerRefetch]);
 
   const showDeleteConfirmation = () => {
     setDeleteConfirmationVisible(true);
@@ -54,13 +54,13 @@ const GoalPage = () => {
       try {
         const res = await goalServices.deleteGoalData(id);
         if (res.success) {
-          window.location.reload();
           hideDeleteConfirmation();
           setAlert({
             showAlert: true,
             success: true,
             message: "Goal deleted successfully",
           });
+          setTriggerRefetch((prev) => !prev);
         }
       } catch (error) {
         console.error(error);
@@ -86,8 +86,15 @@ const GoalPage = () => {
             message: "add saving amount successfully",
           });
           setShowModal(false);
+          setTriggerRefetch((prev) => !prev);
         }
       } catch (error) {
+        setShowModal(false);
+        setAlert({
+          showAlert: true,
+          success: false,
+          message: error.message,
+        });
         console.error(error);
       }
     })();
