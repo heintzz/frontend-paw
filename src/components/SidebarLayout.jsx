@@ -25,11 +25,7 @@ export default function SidebarLayout() {
   const pathname = usePathname();
 
   const checkActiveMenu = (name, path) => {
-    if (name === "Dashboard") {
-      return pathname === path;
-    } else {
-      return pathname.startsWith(path);
-    }
+    return pathname.startsWith(path);
   };
 
   return (

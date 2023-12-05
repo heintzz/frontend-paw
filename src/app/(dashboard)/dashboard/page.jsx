@@ -21,6 +21,7 @@ import {
 } from "@/components/dashboard/DropdownSelect";
 
 import Link from "next/link";
+import { useSidebarStore } from "@/stores/sidebar.store";
 
 export default function Dashboard() {
   const thisMonth = new Date().getMonth() + 1;
@@ -37,11 +38,13 @@ export default function Dashboard() {
   const [isTrackingMonth, setIsTrackingMonth] = useState(interval === "month");
   const [detailInterval, setDetailInterval] = useState(isTrackingMonth ? thisMonth : thisYear);
 
+  const { showSidebar } = useSidebarStore((store) => store);
+
   const isTrackerDataExist = tracker?.length > 0;
   const containerHeight = loadingTracker
     ? "min-h-[200px] md:min-h-[446px]"
     : isTrackerDataExist
-    ? "h-fit"
+    ? "min-h-fit"
     : "min-h-[200px] md:min-h-[446px]";
 
   const cardData = useMemo(() => {
@@ -142,22 +145,32 @@ export default function Dashboard() {
       {/* Content */}
       <div className="flex flex-col gap-y-5 p-8">
         {/* Card Info */}
-        <div className="flex flex-wrap md:flex-nowrap gap-y-5 gap-x-5 mb-5 max-w-[1580px]">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-5 gap-x-5 mb-5 max-w-[1580px]">
           {cardData?.map((item, index) => {
             return <CardSection key={index} item={item} loadingSummary={loadingSummary} />;
           })}
         </div>
 
         <div
-          className={`flex flex-col gap-y-5 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-3 ${containerHeight}`}
+          className={`flex flex-col gap-y-5 md:grid md:grid-cols-2 md:gap-5 ${
+            showSidebar ? "lg:grid-cols-2" : "lg:grid-cols-3"
+          } ${containerHeight} max-w-[1580px]`}
         >
           {/* Graph */}
           {loadingTracker ? (
-            <div className="row-span-1 md:col-span-1 lg:col-span-2 grid place-items-center bg-white shadow-xl rounded-xl p-5">
+            <div
+              className={`row-span-1 md:col-span-1 ${
+                showSidebar ? "lg:col-span-1" : "lg:col-span-2"
+              } grid place-items-center bg-white shadow-xl rounded-xl p-5`}
+            >
               <span className="loading loading-dots loading-lg"></span>
             </div>
           ) : (
-            <div className="row-span-1 md:col-span-1 lg:col-span-2 flex flex-col bg-white shadow-xl rounded-xl p-5 w-full">
+            <div
+              className={`row-span-1 md:col-span-1 ${
+                showSidebar ? "lg:col-span-1" : "lg:col-span-2"
+              } flex flex-col bg-white shadow-xl rounded-xl p-5 w-full`}
+            >
               <div className="flex flex-col md:flex-row md:gap-x-5 items-center justify-between">
                 <p className="font-bold text-xl mb-5 md:mb-0">Statistics</p>
                 <div className="flex flex-wrap gap-3 justify-end">
@@ -182,7 +195,7 @@ export default function Dashboard() {
                       <p>Income </p>
                     </div>
                   </div>
-                  <div className="min-w-[300px]">
+                  <div className="min-w-[400px]">
                     {isTrackingMonth ? (
                       <LineChart tracker={tracker} detailInterval={detailInterval} />
                     ) : (
@@ -211,7 +224,7 @@ export default function Dashboard() {
               </div>
               {emptyConditions[kind] ? (
                 <div className="grid place-items-center">
-                  <div className="mt-10 w-[70%] md:w-full md:max-w-[200px] lg:max-w-[250px] xl:max-w-full grid place-items-center">
+                  <div className="mt-10 w-[80%] md:w-full md:max-w-[200px] lg:max-w-[250px] xl:max-w-full grid place-items-center">
                     <DoughnutChart summary={summary} kind={kind} />
                   </div>
                 </div>

@@ -7,7 +7,7 @@ export const sidebarItems = [
   {
     name: "Dashboard",
     icon: DashboardIcon,
-    path: "/",
+    path: "/dashboard",
   },
   {
     name: "Income",
@@ -30,7 +30,7 @@ export const sidebarItemsOnSmallScreen = [
   {
     name: "Dashboard",
     icon: DashboardIcon,
-    path: "/",
+    path: "/dashboard",
   },
   {
     name: "Income",
