@@ -208,7 +208,7 @@ const GoalPage = () => {
                     </button>
                     <Link
                       href={{
-                        pathname: "/goal/edit",
+                        pathname: "/goal/Edit",
                         query: {
                           id: goal._id,
                           name: goal.goalName,
