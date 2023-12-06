@@ -6,9 +6,15 @@ import { expenseServices } from "@/services/expense.services";
 import { useRouter } from "next/navigation";
 import { useAlertStore } from "@/stores/alert.store";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
+import ValidationMessage from "@/components/ValidationMessage";
 
 const CreatePage = () => {
-  const { control, handleSubmit, reset } = useForm();
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const [isMonthly, setIsMonthly] = useState(false);
   const router = useRouter();
 
@@ -58,19 +64,19 @@ const CreatePage = () => {
     <div className="pt-4 pb-24">
       <div className="bg-white py-4 flex items-center">
         <button className="ml-8" onClick={() => router.push("/expense")}>
-        <MdOutlineArrowBackIosNew   size="1.90em" fill="Black"/>
+          <MdOutlineArrowBackIosNew size="1.90em" fill="Black" />
         </button>
         <h1 className="font-bold text-[32px] text-black ml-8">Create Expense</h1>
       </div>
       <div className="flex items-center justify-center mt-8">
-        <div className="p-4 min-w-[50%] max-w-[800px]">
+        <div className="p-4 w-[400px]">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
               <label className="font-semibold text-[20px] text-black">Activity</label>
               <Controller
                 name="activity"
                 control={control}
-                defaultValue=""
+                rules={{ required: "Activity name cannot be empty" }}
                 render={({ field }) => (
                   <input
                     {...field}
@@ -80,6 +86,9 @@ const CreatePage = () => {
                   />
                 )}
               />
+              {errors?.activity ? (
+                <ValidationMessage>{errors.activity.message}</ValidationMessage>
+              ) : null}
             </div>
             <div className="mb-4">
               <label className="font-semibold text-[20px] text-black">Category</label>
@@ -100,13 +109,21 @@ const CreatePage = () => {
                   </select>
                 )}
               />
+              {errors?.category ? (
+                <ValidationMessage>{errors.category.message}</ValidationMessage>
+              ) : null}
             </div>
             <div className="mb-4">
               <label className="font-semibold text-[20px] text-black">Amount</label>
               <Controller
                 name="amount"
                 control={control}
-                defaultValue=""
+                rules={{
+                  required: "Expense amount cannot be empty",
+                  validate: (value) => {
+                    return !value.includes("-") || "Please enter a non negative value";
+                  },
+                }}
                 render={({ field }) => (
                   <input
                     {...field}
@@ -116,6 +133,9 @@ const CreatePage = () => {
                   />
                 )}
               />
+              {errors?.amount ? (
+                <ValidationMessage>{errors.amount.message}</ValidationMessage>
+              ) : null}
             </div>
             <div className="mb-1 flex items-center">
               <label className="font-semibold text-[20px] text-black mr-4">Monthly</label>

@@ -16,7 +16,7 @@ const getIncomeData = async () => {
         resolve(response.data);
       })
       .catch((err) => {
-        reject(err.response.data);
+        reject(err.response?.data);
       });
   });
 };
@@ -34,7 +34,7 @@ const createIncomeData = async (body) => {
         resolve(response.data);
       })
       .catch((err) => {
-        reject(err.response.data);
+        reject(err.response?.data);
       });
   });
 };
@@ -52,7 +52,7 @@ const editIncomeData = async (body, id) => {
         resolve(response.data);
       })
       .catch((err) => {
-        reject(err.response.data);
+        reject(err.response?.data);
       });
   });
 };
@@ -70,9 +70,9 @@ const deleteIncomeData = async (id) => {
         resolve(response.data);
       })
       .catch((err) => {
-        reject(err.response.data);
+        reject(err.response?.data);
       });
   });
 };
 
-export const incomeServices = { getIncomeData, createIncomeData, editIncomeData, deleteIncomeData};
+export const incomeServices = { getIncomeData, createIncomeData, editIncomeData, deleteIncomeData };

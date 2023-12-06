@@ -101,7 +101,12 @@ const ExpensePage = () => {
           });
         }
       } catch (error) {
-        console.error(error);
+        hideDeleteConfirmation();
+        setAlert({
+          showAlert: true,
+          success: false,
+          message: error,
+        });
       }
     })();
   };
@@ -117,9 +122,9 @@ const ExpensePage = () => {
   return (
     <div className="pt-4 pb-24">
       <AlertResponse />
-      <div className="bg-white min-w-screen py-4 flex items-center justify-between">
-        <h1 className="font-bold text-[32px] text-black ml-8">Expense</h1>
-        <div className="flex space-x-4 mr-4">
+      <div className="bg-white min-w-screen py-4 px-8 flex items-center justify-between">
+        <h1 className="font-bold text-[32px] text-black">Expense</h1>
+        <div className="flex space-x-4">
           <button
             className="rounded-3xl text-white px-8 py-2 bg-main hover:bg-main-hover active:bg-main-active"
             onClick={() => setShowFilter(!showFilter)}
@@ -127,7 +132,7 @@ const ExpensePage = () => {
             Filter
           </button>
           <button
-            className="rounded-3xl text-white text-[32px] font-thin px-4 text-center bg-main hover:bg-main-hover active:bg-main-active"
+            className="rounded-full w-12 h-12 text-white text-[32px] font-thin text-center bg-main hover:bg-main-hover active:bg-main-active"
             onClick={() => router.push("/expense/create")}
           >
             +
@@ -231,7 +236,7 @@ const ExpensePage = () => {
                   {sortColumn === "amount" && sortOrder === "asc" ? "▲" : "▼"}
                 </button>
               </th>
-              <th>Status Penambahan</th>
+              <th>Addition Status</th>
               <th className="text-center">Action</th>
             </tr>
           </thead>
@@ -248,7 +253,7 @@ const ExpensePage = () => {
                       item.autoAdd ? "bg-info" : "bg-main"
                     } text-white w-fit px-4 py-1 font-semibold`}
                   >
-                    {item.autoAdd ? "Otomatis" : "Manual"}
+                    {item.autoAdd ? "Automated" : "Manual"}
                   </div>
                 </td>
                 <td>

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useAlertStore } from "@/stores/alert.store";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
+import ValidationMessage from "@/components/ValidationMessage";
 
 const EditPage = () => {
   const searchParams = useSearchParams();
@@ -15,7 +16,12 @@ const EditPage = () => {
   const incomeAmount = searchParams.get("amount");
   const incomeMonthly = searchParams.get("monthly") === "true";
 
-  const { control, handleSubmit, reset } = useForm();
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const [isMonthly, setIsMonthly] = useState(incomeMonthly);
   const router = useRouter();
   const setAlert = useAlertStore((state) => state.setAlert);
@@ -53,12 +59,12 @@ const EditPage = () => {
     <div className="pt-4 pb-24">
       <div className="bg-white py-4 flex items-center">
         <button className="ml-8" onClick={() => router.push("/income")}>
-        <MdOutlineArrowBackIosNew   size="1.90em" fill="Black"/>
+          <MdOutlineArrowBackIosNew size="1.90em" fill="Black" />
         </button>
         <h1 className="font-bold text-[32px] text-black ml-8">Edit Income</h1>
       </div>
       <div className="flex items-center justify-center mt-8">
-        <div className="p-4 min-w-[50%] max-w-[800px]">
+        <div className="p-4 w-[400px]">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
               <label className="font-semibold text-[20px] text-black">Activity</label>
@@ -66,6 +72,7 @@ const EditPage = () => {
                 name="activity"
                 control={control}
                 defaultValue={incomeName}
+                rules={{ required: "Activity name cannot be empty" }}
                 render={({ field }) => (
                   <input
                     {...field}
@@ -75,6 +82,9 @@ const EditPage = () => {
                   />
                 )}
               />
+              {errors?.activity ? (
+                <ValidationMessage>{errors.activity.message}</ValidationMessage>
+              ) : null}
             </div>
             <div className="mb-4">
               <label className="font-semibold text-[20px] text-black">Amount</label>
@@ -82,6 +92,12 @@ const EditPage = () => {
                 name="amount"
                 control={control}
                 defaultValue={incomeAmount}
+                rules={{
+                  required: "Income amount cannot be empty",
+                  validate: (value) => {
+                    return !value.includes("-") || "Please enter a non negative value";
+                  },
+                }}
                 render={({ field }) => (
                   <input
                     {...field}
@@ -91,6 +107,9 @@ const EditPage = () => {
                   />
                 )}
               />
+              {errors?.amount ? (
+                <ValidationMessage>{errors.amount.message}</ValidationMessage>
+              ) : null}
             </div>
             <div className="mb-1 flex items-center">
               <label className="font-semibold text-[20px] text-black mr-4">Monthly</label>

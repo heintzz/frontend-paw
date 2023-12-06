@@ -36,6 +36,8 @@ export const SelectMonth = ({ value, setValue }) => {
 };
 
 export const SelectYear = ({ value, setValue }) => {
+  const thisYear = new Date().getFullYear();
+
   return (
     <select
       value={value}
@@ -44,8 +46,13 @@ export const SelectYear = ({ value, setValue }) => {
         setValue(e.target.value);
       }}
     >
-      <option value="2023">2023</option>
-      <option value="2022">2022</option>
+      {Array.from({ length: 5 }, (_, i) => {
+        return (
+          <option key={i} value={`${thisYear - i}`}>
+            {thisYear - i}
+          </option>
+        );
+      })}
     </select>
   );
 };

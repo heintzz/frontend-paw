@@ -16,7 +16,7 @@ const getExpenseData = async () => {
         resolve(response.data);
       })
       .catch((err) => {
-        reject(err.response.data);
+        reject(err.response?.data);
       });
   });
 };
@@ -34,7 +34,7 @@ const createExpenseData = async (body) => {
         resolve(response.data);
       })
       .catch((err) => {
-        reject(err.response.data);
+        reject(err.response?.data);
       });
   });
 };
@@ -52,7 +52,7 @@ const editExpenseData = async (body, id) => {
         resolve(response.data);
       })
       .catch((err) => {
-        reject(err.response.data);
+        reject(err.response?.data);
       });
   });
 };
@@ -70,7 +70,7 @@ const deleteExpenseData = async (id) => {
         resolve(response.data);
       })
       .catch((err) => {
-        reject(err.response.data);
+        reject(err.response?.data);
       });
   });
 };

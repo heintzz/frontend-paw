@@ -54,16 +54,21 @@ const GoalPage = () => {
       try {
         const res = await goalServices.deleteGoalData(id);
         if (res.success) {
+          setTriggerRefetch((prev) => !prev);
           hideDeleteConfirmation();
           setAlert({
             showAlert: true,
             success: true,
             message: "Goal deleted successfully",
           });
-          setTriggerRefetch((prev) => !prev);
         }
       } catch (error) {
-        console.error(error);
+        hideDeleteConfirmation();
+        setAlert({
+          showAlert: true,
+          success: false,
+          message: error,
+        });
       }
     })();
   };
@@ -80,13 +85,13 @@ const GoalPage = () => {
         if (res.success) {
           reset();
           router.push("/goal");
+          setTriggerRefetch((prev) => !prev);
           setAlert({
             showAlert: true,
             success: true,
-            message: "add saving amount successfully",
+            message: "Add saving amount successfully",
           });
           setShowModal(false);
-          setTriggerRefetch((prev) => !prev);
         }
       } catch (error) {
         setShowModal(false);
@@ -129,16 +134,14 @@ const GoalPage = () => {
           </div>
         </form>
       </Modal>
-      <div className="bg-white min-w-screen py-4 flex items-center justify-between">
-        <h1 className="font-bold text-[32px] text-black ml-8">Goal</h1>
-        <div className="flex space-x-4 mr-20">
-          <button
-            className="rounded-full text-white px-8 py-2 bg-main hover:bg-main-hover active:bg-main-active "
-            onClick={() => router.push("/goal/create")}
-          >
-            Create
-          </button>
-        </div>
+      <div className="bg-white min-w-screen py-4 px-8 flex items-center justify-between">
+        <h1 className="font-bold text-[32px] text-black">Goal</h1>
+        <button
+          className="rounded-full w-12 h-12 text-white text-[32px] font-thin text-center bg-main hover:bg-main-hover active:bg-main-active"
+          onClick={() => router.push("/goal/create")}
+        >
+          +
+        </button>
       </div>
       <div>
         {goalData.map((goal) => {

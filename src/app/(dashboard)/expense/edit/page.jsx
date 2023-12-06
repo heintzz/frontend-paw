@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useAlertStore } from "@/stores/alert.store";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
+import ValidationMessage from "@/components/ValidationMessage";
 
 const EditPage = () => {
   const searchParams = useSearchParams();
@@ -15,7 +16,12 @@ const EditPage = () => {
   const expenseAmount = searchParams.get("amount");
   const expenseMonthly = searchParams.get("monthly") === "true";
 
-  const { control, handleSubmit, reset } = useForm();
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const [isMonthly, setIsMonthly] = useState(expenseMonthly);
   const router = useRouter();
   const setAlert = useAlertStore((state) => state.setAlert);
@@ -54,12 +60,12 @@ const EditPage = () => {
     <div className="pt-8 relative">
       <div className="bg-white py-4 flex items-center">
         <button className="ml-8" onClick={() => router.push("/expense")}>
-        <MdOutlineArrowBackIosNew   size="1.90em" fill="Black"/>
+          <MdOutlineArrowBackIosNew size="1.90em" fill="Black" />
         </button>
         <h1 className="font-bold text-[32px] text-black ml-8">Edit Expense</h1>
       </div>
       <div className="flex items-center justify-center mt-8">
-        <div className="p-4 rounded-xl">
+        <div className="p-4 w-[400px]">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
               <label className="font-semibold text-[20px] text-black">Activity</label>
@@ -67,15 +73,19 @@ const EditPage = () => {
                 name="activity"
                 control={control}
                 defaultValue={expenseName}
+                rules={{ required: "Activity name cannot be empty" }}
                 render={({ field }) => (
                   <input
                     {...field}
                     type="text"
-                    className="w-full py-2 px-4 rounded-md bg-white outline outline-2 mt-2"
+                    className="input input-bordered focus:outline-black focus:border-none w-full mt-2"
                     placeholder="Expense name"
                   />
                 )}
               />
+              {errors?.activity ? (
+                <ValidationMessage>{errors.activity.message}</ValidationMessage>
+              ) : null}
             </div>
             <div className="mb-4">
               <label className="font-semibold text-[20px] text-black">Amount</label>
@@ -83,15 +93,24 @@ const EditPage = () => {
                 name="amount"
                 control={control}
                 defaultValue={expenseAmount}
+                rules={{
+                  required: "Expense amount cannot be empty",
+                  validate: (value) => {
+                    return !value.includes("-") || "Please enter a non negative value";
+                  },
+                }}
                 render={({ field }) => (
                   <input
                     {...field}
                     type="number"
-                    className="w-full py-2 px-4 rounded-md bg-white outline outline-2 mt-2"
+                    className="input input-bordered focus:outline-black focus:border-none w-full mt-2"
                     placeholder="eg: 200000"
                   />
                 )}
               />
+              {errors?.amount ? (
+                <ValidationMessage>{errors.amount.message}</ValidationMessage>
+              ) : null}
             </div>
             <div className="mb-4 flex items-center">
               <label className="font-semibold text-[20px] text-black mr-4">Monthly</label>

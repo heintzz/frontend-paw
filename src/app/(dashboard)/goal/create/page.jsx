@@ -25,6 +25,7 @@ const CreatePage = () => {
 
   const uploadImage = (e) => {
     let reader = new FileReader();
+    console.log(e.target.files);
     if (e.target?.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
       reader.onload = () => {
@@ -73,31 +74,18 @@ const CreatePage = () => {
   };
 
   return (
-    <div className="pt-4">
+    <div className="py-4">
       <div className="bg-white py-4 flex items-center">
         <button className="ml-8" onClick={() => router.push("/goal")}>
-        <MdOutlineArrowBackIosNew   size="1.90em" fill="Black"/>
+          <MdOutlineArrowBackIosNew size="1.90em" fill="Black" />
         </button>
         <h1 className="font-bold text-[32px] text-black ml-8">Create Goal</h1>
       </div>
-      <div className="grid grid-cols-3 mt-8">
-        <div className="pt-4 justify-self-center">
-          {image && (
-            <Image
-              src={image}
-              alt="image preview"
-              className="min-w-[80%] max-w-[400px]"
-              width={500}
-              height={500}
-            />
-          )}
-        </div>
-        <div className="p-4 min-w-[30%] max-w-[800px]">
+      <div className="grid place-content-center mt-8">
+        <div className="p-4 w-full max-w-[400px]">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
-              <label className="font-semibold text-[20px] text-black mb-2">
-                Name of Goal
-              </label>
+              <label className="font-semibold text-[20px] text-black mb-2">Name of Goal</label>
               <input
                 type="text"
                 className="input input-bordered focus:outline-black focus:border-none w-full mt-2"
@@ -105,14 +93,10 @@ const CreatePage = () => {
                   required: "Name cannot be empty",
                 })}
               />
-              {errors.name ? (
-                <ValidationMessage>{errors.name.message}</ValidationMessage>
-              ) : null}
+              {errors.name ? <ValidationMessage>{errors.name.message}</ValidationMessage> : null}
             </div>
             <div className="mb-4">
-              <label className="font-semibold text-[20px] text-black">
-                Description
-              </label>
+              <label className="font-semibold text-[20px] text-black">Description</label>
               <input
                 type="text"
                 className="input input-bordered focus:outline-black focus:border-none w-full mt-2"
@@ -120,14 +104,10 @@ const CreatePage = () => {
                   required: "Description cannot be empty",
                 })}
               />
-              {errors.desc ? (
-                <ValidationMessage>{errors.desc.message}</ValidationMessage>
-              ) : null}
+              {errors.desc ? <ValidationMessage>{errors.desc.message}</ValidationMessage> : null}
             </div>
             <div className="mb-4">
-              <label className="font-semibold text-[20px] text-black">
-                Price
-              </label>
+              <label className="font-semibold text-[20px] text-black">Price</label>
               <input
                 type="number"
                 className="input input-bordered focus:outline-black focus:border-none w-full mt-2"
@@ -135,14 +115,10 @@ const CreatePage = () => {
                   required: "Price cannot be empty",
                 })}
               />
-              {errors.price ? (
-                <ValidationMessage>{errors.price.message}</ValidationMessage>
-              ) : null}
+              {errors.price ? <ValidationMessage>{errors.price.message}</ValidationMessage> : null}
             </div>
             <div className="mb-4">
-              <label className="font-semibold text-[20px] text-black">
-                Store
-              </label>
+              <label className="font-semibold text-[20px] text-black">Store</label>
               <input
                 type="text"
                 className="input input-bordered focus:outline-black focus:border-none w-full mt-2"
@@ -152,14 +128,10 @@ const CreatePage = () => {
                   required: "Store cannot be empty",
                 })}
               />
-              {errors.store ? (
-                <ValidationMessage>{errors.store.message}</ValidationMessage>
-              ) : null}
+              {errors.store ? <ValidationMessage>{errors.store.message}</ValidationMessage> : null}
             </div>
             <div className="mb-4">
-              <label className="font-semibold text-[20px] text-black">
-                Goal Image
-              </label>
+              <label className="font-semibold text-[20px] text-black">Goal Image</label>
               <div className="flex items-center">
                 <input
                   type="file"
@@ -176,11 +148,20 @@ const CreatePage = () => {
                   Choose image
                 </label>
               </div>
-              {errors.image ? (
-                <ValidationMessage>{errors.image.message}</ValidationMessage>
-              ) : null}
+              {errors.image ? <ValidationMessage>{errors.image.message}</ValidationMessage> : null}
+              <div className="pt-4 px-4 justify-self-center">
+                {image && (
+                  <Image
+                    src={image}
+                    alt="image preview"
+                    className="w-[100%]"
+                    width={500}
+                    height={500}
+                  />
+                )}
+              </div>
             </div>
-            <div className="text-center">
+            <div className={`text-center ${image ? "mt-10" : ""}`}>
               <button
                 type="submit"
                 className="rounded-full text-white px-8 py-2 bg-main hover:bg-main-hover active:bg-main-active"
