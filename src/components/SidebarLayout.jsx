@@ -99,7 +99,7 @@ const MediumScreenSidebar = ({ showSidebar, setShowSidebar, activeMenu }) => {
           className="item"
           onClick={() => {
             tokenServices.removeAccessToken();
-            router.push("/dashboard");
+            router.push("/");
           }}
         >
           <Image
