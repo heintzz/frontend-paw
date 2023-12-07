@@ -24,7 +24,7 @@ Pengunggahan website dapat dilihat pada laman berikut
    cd frontend-paw
    code .
    ```
-3.  On the VS Code terminal, make your own local environment variable
+3. On the VS Code terminal, make your own local environment variable
    ```shell
    touch .env.local
    ```
