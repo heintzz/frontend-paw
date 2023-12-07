@@ -1,5 +1,8 @@
 # Frontend PAW - Kelompok 2
 
+## Financial Tracker
+Fintrack merupakan sebuah web app pengelola keuangan personal yang bertujuan untuk mengelola dan memantau penghasilan, pengeluaran dan goal yang ingin dicapai dalam tujuan finansial.
+
 Anggota Kelompok:
 
 1. Dhiyaa Amalia Putri (21/479811/TK/52942)
