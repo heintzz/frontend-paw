@@ -2,13 +2,13 @@ import { listOfMonths } from "@/enums/date.enum";
 
 export const convertNumberToCurrencyFormat = (number) => {
   const stringNumber = String(number);
+  const isNegative = stringNumber.startsWith("-");
   const arrayOfStringNumber = stringNumber.split("");
   const reverseStringNumber = arrayOfStringNumber.reverse();
-  const isNegative = stringNumber.startsWith("-");
   const underThousand = reverseStringNumber.length < 3;
 
   if (isNegative) {
-    arrayOfStringNumber.shift();
+    reverseStringNumber.pop();
   }
 
   if (underThousand) {
@@ -22,14 +22,13 @@ export const convertNumberToCurrencyFormat = (number) => {
     if (thousandMultiplier && !lastNumber) {
       return "." + num;
     }
-
     return num;
   });
 
   const formattedArray = reversedArray.reverse();
   const currencyFormat = formattedArray.join("");
 
-  return currencyFormat;
+  return isNegative ? "-" + currencyFormat : currencyFormat;
 };
 
 export const formatDate = (inputDate) => {
