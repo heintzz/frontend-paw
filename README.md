@@ -3,16 +3,40 @@
 ## Financial Tracker
 Fintrack merupakan sebuah web app pengelola keuangan personal yang bertujuan untuk mengelola dan memantau penghasilan, pengeluaran dan goal yang ingin dicapai dalam tujuan finansial.
 
-Anggota Kelompok:
+Anggota Kelompok
+<table>
+  <tr>
+    <th>Nama</th>
+    <th>NIM</th>
+  </tr>
+  <tr>
+    <td>Dhiyaa Amalia Putri</td>
+    <td>21/479811/TK/52942</td>
+  </tr>
+  <tr>
+    <td>Muhammad Hasnan Regard</td>
+    <td>21/481381/TK/53135</td>
+  </tr>
+  <tr>
+    <td>Bagus Rakadyanto Oktavianto Putra</td>
+    <td>21/474401/TK/52343</td>
+  </tr>
+  <tr>
+    <td>Valentinus Wastu Rosari</td>
+    <td>21/478174/TK/52692</td>
+  </tr>
+</table>
 
-1. Dhiyaa Amalia Putri (21/479811/TK/52942)
-2. Muhammad Hasnan Regard (21/481381/TK/53135)
-3. Bagus Rakadyanto Oktavianto Putra (21/474401/TK/52343)
-4. Valentinus Wastu Rosari (21/478174/TK/52692)
 
-## Deployment
-Pengunggahan website dapat dilihat pada laman berikut
-[Financial Tracker Web](https://fintrack-web.vercel.app)
+
+## Link & Deployment
+Pengunggahan website, video presentasi dan materi presentasi dapat dilihat pada laman berikut    
+1. [Financial Tracker Web](https://fintrack-web.vercel.app)
+2. [Slide PPT](https://s.id/1Y5DI)    
+3. [Presentasi Demo](https://youtu.be/0IbzR-SGerw)   
+![image](https://github.com/heintzz/frontend-paw/assets/91127753/7b7e9318-b768-442d-b4af-89873c8bdb4a)
+Terdapat bug pada menit [9.59](https://www.youtube.com/watch?v=0IbzR-SGerw&t=599s) saat presentasi direkam. Bug tersebut berupa kesalahan dalam pengonversian nilai negatif ke dalam format rupiah. Bug tersebut sudah diperbaiki pasca demo dan penampilan _balance_ sudah sesuai dengan data yang ada.
+
 
 ## How to Run Locally
 1. Make a local copy of this project on your computer
