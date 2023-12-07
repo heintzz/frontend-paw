@@ -24,15 +24,19 @@ Pengunggahan website dapat dilihat pada laman berikut
    cd frontend-paw
    code .
    ```
-3. On the VS Code terminal, set up the required software packages
-    ```shell
-     npm install
-    ```
-4. Copy this to your local environment variable
+3.  On the VS Code terminal, make your own local environment variable
+   ```shell
+   touch .env.local
+   ```
+4. Copy this variable to .env.local
    ```shell
    API_BASE_URL=https://spring-bud-centipede-garb.cyclic.app
    ```    
-5. Start the application  
+5. Set up the required software packages
+    ```shell
+     npm install
+    ```
+6. Start the application  
    ```shell
    npm run dev
    ```
